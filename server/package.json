@@ -1,0 +1,9 @@
+{
+  "name": "tare",
+  "version": "1.0.0",
+  "description": "a collaboration app",
+  "main": "index.js",
+  "repository": "https://github.com/samcyn/tare.git",
+  "author": "samcyn <samsoniyanda@outlook.com>",
+  "license": "MIT"
+}
