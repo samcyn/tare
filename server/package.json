@@ -4,6 +4,9 @@
   "description": "a colloboration app for all",
   "main": "index.js",
   "scripts": {
+    "start": "node src/index.js",
+    "generate-graphql-types": "prisma deploy",
+    "graphql-playground": "graphql playground",
     "lint": "eslint"
   },
   "dependencies": {
