@@ -1,3 +1,6 @@
+function info() {
+  return 'Welcome To Tare API';
+}
 // context here contains the db instance in this case a prisma db...
 async function feed(parent, args, context) {
   const where = args.filter
@@ -32,5 +35,6 @@ async function feed(parent, args, context) {
 }
 
 module.exports = {
+  info,
   feed,
 };

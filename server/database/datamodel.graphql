@@ -7,6 +7,23 @@ type Link {
   votes: [Vote!]!
 }
 
+type Event {
+  id: ID! @unique
+  category: Category!
+  createdAt: DateTime!
+  coverImage: File
+  description: String!
+  date: DateTime!
+  duration: Int!
+  deleted: Boolean! @default(value: "false")
+  draft: Boolean! @default(value: "false")
+  likes: [Like!]!
+  location: String!
+  title: String!
+  published: Boolean! @default(value: "false")
+  postedBy: User
+}
+
 type User {
   id: ID! @unique
   name: String!
@@ -20,4 +37,22 @@ type Vote {
   id: ID! @unique
   link: Link!
   user: User!
+}
+
+type Like {
+  id: ID! @unique
+  event: Event!
+  user: User!
+}
+
+type Category {
+  id: ID! @unique
+  title: String
+}
+
+type File {
+  id: ID! @unique
+  filename: String!
+  mimetype: String!
+  encoding: String!
 }
