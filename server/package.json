@@ -1,0 +1,26 @@
+{
+  "name": "yare-app-server",
+  "version": "1.0.0",
+  "description": "a colloboration app for all",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "graphql-yoga": "^1.16.7",
+    "jsonwebtoken": "^8.4.0",
+    "prisma-binding": "^2.2.1"
+  },
+  "repository": " https://github.com/samcyn/tare.git",
+  "author": "samcyn",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1"
+  }
+}
