@@ -1,14 +1,13 @@
 const { GraphQLServer } = require('graphql-yoga');
 const { Prisma } = require('prisma-binding');
 
-// queries, mutations and subscriptions
+// R E S O L V E R S
 const Query = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation');
 const AuthPayload = require('./resolvers/AuthPayload');
 const Subscription = require('./resolvers/Subscription');
 const Feed = require('./resolvers/Feed');
 
-// resolvers
 const resolvers = {
   Query,
   Mutation,
@@ -17,7 +16,7 @@ const resolvers = {
   Feed,
 };
 
-// initialize graphql server
+// I N I T I A L I Z E - G R A P H Q L - S E R V E R
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
@@ -35,5 +34,5 @@ const server = new GraphQLServer({
   }),
 });
 
-// start server
+// S T A R T -T H E - S E R V E R
 server.start(() => console.log('Server is running on http://localhost:4000'));

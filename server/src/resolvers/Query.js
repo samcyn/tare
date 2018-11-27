@@ -1,7 +1,9 @@
+// I N F O - R E S O L V E R
 function info() {
   return 'Welcome To Tare API';
 }
-// context here contains the db instance in this case a prisma db...
+
+// F E E D - R E S O L V E R
 async function feed(parent, args, context) {
   const where = args.filter
     ? {
@@ -16,7 +18,7 @@ async function feed(parent, args, context) {
     {
       where, skip: args.skip, first: args.first, orderBy: args.orderBy,
     },
-    '{ id }',
+    '{ id }', // I D - A L O N E - I N - S E L E C T I O N - S E T
   );
   const countSelectionSet = `
     {
@@ -31,6 +33,10 @@ async function feed(parent, args, context) {
   return {
     count: linksConnection.aggregate.count,
     linkIds: queriedLinks.map(link => link.id),
+    /*
+      SINCE THIS QUERY WAS TO RETURN TYPE FEED,
+      LINKIDS  WILL BE RESOLVE FURTHER WITH ANOTHER RESOLVER
+    */
   };
 }
 
