@@ -11,7 +11,8 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const Recipe = require('./models/Recipe');
 const User = require('./models/User');
-
+const Link = require('./models/Link');
+const Vote = require('./models/Vote');
 
 const { typeDefs } = require('./schema');
 const { resolvers } = require('./resolvers');
@@ -22,7 +23,6 @@ const schema = makeExecutableSchema({
   resolvers,
 });
 
-console.log(process.env.MONGO_URI);
 // connects to database
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true }).then(() => {
   console.log('CONNECTED');
@@ -66,6 +66,8 @@ app.use(
     context: {
       Recipe,
       User,
+      Link,
+      Vote,
       currentUser,
     },
   })),
