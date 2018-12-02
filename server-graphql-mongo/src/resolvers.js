@@ -1,3 +1,5 @@
+const { GraphQLScalarType } = require('graphql');
+const { Kind } = require('graphql/language');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -7,6 +9,23 @@ const createToken = (user, secret, expiresIn) => {
 };
 
 exports.resolvers = {
+  Date: new GraphQLScalarType({
+    name: 'Date',
+    description: 'Date custom scalar type',
+    parseValue(value) {
+      return new Date(value);
+    },
+    serialize(value) {
+      return value.getTime();
+    },
+    parseLiteral(ast) {
+      if (ast.kind === Kind.INT) {
+        return parseInt(ast.value, 10);
+      }
+      return null;
+    },
+  }),
+
   Query: {
     info: () => 'Welcome to Tare API',
     feed: async (parent, args, { Link }) => {
@@ -27,7 +46,10 @@ exports.resolvers = {
     links: (parent, args, { Link }) => Link.find({ where: { id_in: parent.linkIds } }),
   },
   AuthPayload: {
-    user: (parent, args, { User }) => User.findOne({ _id: parent.userId }),
+    user: (parent, args, { User }) => {
+      console.log('AUTHPAYLOAD', parent.userId);
+      return User.findOne({ _id: parent.userId });
+    },
   },
   Mutation: {
     signup: async (parent, { email, name, password }, { User }) => {
@@ -74,7 +96,8 @@ exports.resolvers = {
       }
       // get user id when user wants to post link...
       const { _id } = currentUser;
-      const newLink = await new Link({ ...args, postedBy: _id }).save();
+      const saveLink = await new Link({ ...args, postedBy: _id }).save();
+      const newLink = await Link.populate(saveLink, { path: 'postedBy' });
       return newLink;
     },
     vote: async (parent, args, { currentUser, Vote }) => {
@@ -90,39 +113,39 @@ exports.resolvers = {
 
       return new Vote({ user: _id, link: args.linkId });
     },
-    addRecipe: async (root, {
-      name, description, category, instructions, username,
-    },
-      { Recipe }) => {
-      const newRecipe = await new Recipe({
-        name,
-        description,
-        instructions,
-        username,
-        category,
-      }).save();
-      return newRecipe;
-    },
-    deleteUserRecipe: async (root, { _id }, { Recipe }) => {
-      const recipe = await Recipe.findOneAndRemove({ _id });
-      return recipe;
-    },
-    likeRecipe: async (root, { _id, username }, { Recipe, User }) => {
-      const recipe = await Recipe.findOneAndUpdate({ _id }, {
-        $inc: { likes: 1 },
-      });
-      await User.findOneAndUpdate({ username }, { $addToSet: { favorites: _id } });
+    // addRecipe: async (root, {
+    //   name, description, category, instructions, username,
+    // },
+    //   { Recipe }) => {
+    //   const newRecipe = await new Recipe({
+    //     name,
+    //     description,
+    //     instructions,
+    //     username,
+    //     category,
+    //   }).save();
+    //   return newRecipe;
+    // },
+    // deleteUserRecipe: async (root, { _id }, { Recipe }) => {
+    //   const recipe = await Recipe.findOneAndRemove({ _id });
+    //   return recipe;
+    // },
+    // likeRecipe: async (root, { _id, username }, { Recipe, User }) => {
+    //   const recipe = await Recipe.findOneAndUpdate({ _id }, {
+    //     $inc: { likes: 1 },
+    //   });
+    //   await User.findOneAndUpdate({ username }, { $addToSet: { favorites: _id } });
 
-      return recipe;
-    },
-    unLikeRecipe: async (root, { _id, username }, { Recipe, User }) => {
-      const recipe = await Recipe.findOneAndUpdate({ _id }, {
-        $inc: { likes: -1 },
-      });
-      await User.findOneAndUpdate({ username }, { $pull: { favorites: _id } });
+    //   return recipe;
+    // },
+    // unLikeRecipe: async (root, { _id, username }, { Recipe, User }) => {
+    //   const recipe = await Recipe.findOneAndUpdate({ _id }, {
+    //     $inc: { likes: -1 },
+    //   });
+    //   await User.findOneAndUpdate({ username }, { $pull: { favorites: _id } });
 
-      return recipe;
-    },
+    //   return recipe;
+    // },
 
   },
 };

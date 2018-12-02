@@ -39,7 +39,8 @@ app.use(cors(corsOptions));
 
 // S E T - U P - M I D D L E W A R E
 app.use(async (req, res, next) => {
-  const token = req.headers['authorization'];
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YzA0MjAwZmQ5YmYzYzM2NjU1NDRiNzEiLCJpYXQiOjE1NDM3NzQ5MDQsImV4cCI6MTU0Mzc3ODUwNH0.0Ximncmgz2_o8VKVmCCSkZUvYpRIdRsPEIRlGUlQ8d0';
+  // req.headers['authorization'];
   if (token !== 'null') {
     try {
       const currentUser = await jwt.verify(token, process.env.SECRET);

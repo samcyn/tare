@@ -1,4 +1,6 @@
 exports.typeDefs = `
+  scalar Date
+
   type Vote {
     id: ID!
     link: Link!
@@ -7,7 +9,7 @@ exports.typeDefs = `
  
   type Link {
     id: ID!
-    createdAt: DateTime!
+    createdAt: Date!
     description: String!
     url: String!
     postedBy: User
