@@ -16,7 +16,6 @@ exports.resolvers = {
         .sort(args.orderBy)
         .select('id');
 
-      // 3
       return {
         count: queriedLinks.length,
         linkIds: queriedLinks,

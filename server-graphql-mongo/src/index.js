@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-// Bring in GRAPHQL EXPRESS MIDDLEWARE
+// G R A P H Q L - E X P R E S S - M I D D L E W A R E
 const { graphiqlExpress, graphqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 const path = require('path');
@@ -17,18 +17,18 @@ const Vote = require('./models/Vote');
 const { typeDefs } = require('./schema');
 const { resolvers } = require('./resolvers');
 
-// Create Schema
+// C R E A T E - S C H E M A 
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
 });
 
-// connects to database
+// C O N N E C T - T O - D A T A B A S E
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true }).then(() => {
   console.log('CONNECTED');
 }).catch(err => console.log(err));
 
-// initialize application
+// I N I T I A L I Z E - A P P L I C A T I O N
 const app = express();
 
 const corsOptions = {
@@ -37,7 +37,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// set up jwt authentication middleware
+// S E T - U P - M I D D L E W A R E
 app.use(async (req, res, next) => {
   const token = req.headers['authorization'];
   if (token !== 'null') {

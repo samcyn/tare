@@ -50,6 +50,4 @@ exports.typeDefs = `
     login(email: String!, password: String!): AuthPayload
     vote(linkId: ID!): Vote
   }
-
-
 `;
