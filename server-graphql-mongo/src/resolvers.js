@@ -1,3 +1,11 @@
+/**
+ * created by Samson Iyanda on 28/11/18
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
+
 const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 const jwt = require('jsonwebtoken');
@@ -30,9 +38,11 @@ exports.resolvers = {
     info: () => 'Welcome to Tare API',
     feed: async (parent, args, { Link }) => {
       const where = args.filter ? { $text: { $search: args.filter } } : {};
-
-      const queriedLinks = await Link.find(where).skip(args.skip).limit(args.first)
-        .sort(args.orderBy)
+      const skip = args.skip || 0;
+      const limit = args.first || 10;
+      const orderBy = args.orderBy ? { createdAt: args.orderBy } : { createdAt: -1 };
+      const queriedLinks = await Link.find(where).skip(skip).limit(limit)
+        .sort(orderBy)
         .select('id');
 
       return {
@@ -43,13 +53,13 @@ exports.resolvers = {
 
   },
   Feed: {
-    links: (parent, args, { Link }) => Link.find({ where: { id_in: parent.linkIds } }),
+    links: async (parent, args, { Link }) => {
+      const links = await Link.find({ _id: { $in: parent.linkIds } }).populate({ path: 'postedBy votes' });
+      return links;
+    },
   },
   AuthPayload: {
-    user: (parent, args, { User }) => {
-      console.log('AUTHPAYLOAD', parent.userId);
-      return User.findOne({ _id: parent.userId });
-    },
+    user: (parent, args, { User }) => User.findOne({ _id: parent.userId }),
   },
   Mutation: {
     signup: async (parent, { email, name, password }, { User }) => {
@@ -97,21 +107,34 @@ exports.resolvers = {
       // get user id when user wants to post link...
       const { _id } = currentUser;
       const saveLink = await new Link({ ...args, postedBy: _id }).save();
-      const newLink = await Link.populate(saveLink, { path: 'postedBy' });
+      const newLink = await Link.populate(saveLink, { path: 'postedBy ' });
       return newLink;
     },
-    vote: async (parent, args, { currentUser, Vote }) => {
+    vote: async (parent, args, { currentUser, Vote, Link }) => {
+      // I F - U S E R - I S - N O T - L O G G E D - I N - T H E Y - C A N 'T - U P V O T E
+      if (!currentUser) {
+        throw new Error('Not Authorised');
+      }
+      // I F - L I N K - D O E S N 'T - E X I S T - T H R O W - E R R O R
+      const linkExist = await Link.find({ _id: args.linkId });
+      if (!linkExist) {
+        throw new Error('Link doesn\'t exist');
+      }
       const { _id } = currentUser;
-
-      const linkExists = await Vote.find({
+      // C H E C K - T O - S E E - I F - U S E R - H A D - V O T E D - B E F O R E
+      const voteExists = await Vote.find({
         user: _id,
         link: args.linkId,
       });
-      if (linkExists) {
+      if (voteExists && voteExists.length > 0) {
         throw new Error(`Already voted for link: ${args.linkId}`);
       }
-
-      return new Vote({ user: _id, link: args.linkId });
+      // S A V E - N E W - VO T E
+      const saveVote = await new Vote({ user: _id, link: args.linkId }).save();
+      /* P O P U L A T E - N E W - V O T E - W I T H - U S E R -
+      A N D - L I N K - C R E N D E N T I A L S */
+      const newVote = await Vote.populate(saveVote, { path: 'link user' });
+      return newVote;
     },
     // addRecipe: async (root, {
     //   name, description, category, instructions, username,

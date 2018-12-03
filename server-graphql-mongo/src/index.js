@@ -1,3 +1,11 @@
+/**
+ * created by Samson Iyanda on 28/11/18
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
+
 require('dotenv').config({ path: 'variables.env' });
 const express = require('express');
 const mongoose = require('mongoose');
@@ -17,7 +25,7 @@ const Vote = require('./models/Vote');
 const { typeDefs } = require('./schema');
 const { resolvers } = require('./resolvers');
 
-// C R E A T E - S C H E M A 
+// C R E A T E - S C H E M A
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
@@ -39,8 +47,7 @@ app.use(cors(corsOptions));
 
 // S E T - U P - M I D D L E W A R E
 app.use(async (req, res, next) => {
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YzA0MjAwZmQ5YmYzYzM2NjU1NDRiNzEiLCJpYXQiOjE1NDM3NzQ5MDQsImV4cCI6MTU0Mzc3ODUwNH0.0Ximncmgz2_o8VKVmCCSkZUvYpRIdRsPEIRlGUlQ8d0';
-  // req.headers['authorization'];
+  const token = req.headers['authorization']; // eslint-disable-line [eslint] ["authorization"]
   if (token !== 'null') {
     try {
       const currentUser = await jwt.verify(token, process.env.SECRET);
@@ -53,12 +60,12 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// create Grahhiql app
+// G R A P H I Q L - E N D P O I N T
 app.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql',
 }));
 
-// Connects schema with Graphql
+// S E T T I N G - U P - C O N T E X T
 app.use(
   '/graphql',
   bodyParser.json(),
@@ -83,6 +90,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 const PORT = process.env.PORT || 4444;
 
+// S T A R T - S E R V E R
 app.listen(PORT, () => {
   console.log(`Server listening on PORT ${PORT}`);
 });

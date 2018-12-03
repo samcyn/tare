@@ -4,3 +4,4 @@ yarn-error.log
 .vscode
 server/package-lock.json
 .env
+variables.env
