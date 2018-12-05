@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/samson-iyanda-afb0fd/database/dev
-# timestamp: Wed Dec 05 2018 03:46:37 GMT+0100 (WAT)
+# timestamp: Wed Dec 05 2018 10:39:18 GMT+0100 (WAT)
 
 type AggregateCategory {
   count: Int!
@@ -271,12 +271,7 @@ type DislikeConnection {
 
 input DislikeCreateInput {
   _event: EventCreateOneWithout_dislikesInput!
-  _creator: UserCreateOneWithout_dislikesInput!
-}
-
-input DislikeCreateManyWithout_creatorInput {
-  create: [DislikeCreateWithout_creatorInput!]
-  connect: [DislikeWhereUniqueInput!]
+  _creator: UserCreateOneInput!
 }
 
 input DislikeCreateManyWithout_eventInput {
@@ -284,12 +279,8 @@ input DislikeCreateManyWithout_eventInput {
   connect: [DislikeWhereUniqueInput!]
 }
 
-input DislikeCreateWithout_creatorInput {
-  _event: EventCreateOneWithout_dislikesInput!
-}
-
 input DislikeCreateWithout_eventInput {
-  _creator: UserCreateOneWithout_dislikesInput!
+  _creator: UserCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -406,17 +397,7 @@ input DislikeSubscriptionWhereInput {
 
 input DislikeUpdateInput {
   _event: EventUpdateOneRequiredWithout_dislikesInput
-  _creator: UserUpdateOneRequiredWithout_dislikesInput
-}
-
-input DislikeUpdateManyWithout_creatorInput {
-  create: [DislikeCreateWithout_creatorInput!]
-  connect: [DislikeWhereUniqueInput!]
-  disconnect: [DislikeWhereUniqueInput!]
-  delete: [DislikeWhereUniqueInput!]
-  update: [DislikeUpdateWithWhereUniqueWithout_creatorInput!]
-  deleteMany: [DislikeScalarWhereInput!]
-  upsert: [DislikeUpsertWithWhereUniqueWithout_creatorInput!]
+  _creator: UserUpdateOneRequiredInput
 }
 
 input DislikeUpdateManyWithout_eventInput {
@@ -429,28 +410,13 @@ input DislikeUpdateManyWithout_eventInput {
   upsert: [DislikeUpsertWithWhereUniqueWithout_eventInput!]
 }
 
-input DislikeUpdateWithout_creatorDataInput {
-  _event: EventUpdateOneRequiredWithout_dislikesInput
-}
-
 input DislikeUpdateWithout_eventDataInput {
-  _creator: UserUpdateOneRequiredWithout_dislikesInput
-}
-
-input DislikeUpdateWithWhereUniqueWithout_creatorInput {
-  where: DislikeWhereUniqueInput!
-  data: DislikeUpdateWithout_creatorDataInput!
+  _creator: UserUpdateOneRequiredInput
 }
 
 input DislikeUpdateWithWhereUniqueWithout_eventInput {
   where: DislikeWhereUniqueInput!
   data: DislikeUpdateWithout_eventDataInput!
-}
-
-input DislikeUpsertWithWhereUniqueWithout_creatorInput {
-  where: DislikeWhereUniqueInput!
-  update: DislikeUpdateWithout_creatorDataInput!
-  create: DislikeCreateWithout_creatorInput!
 }
 
 input DislikeUpsertWithWhereUniqueWithout_eventInput {
@@ -2470,7 +2436,6 @@ type User implements Node {
   links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link!]
   votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote!]
   _likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
-  _dislikes(where: DislikeWhereInput, orderBy: DislikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dislike!]
   _events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
 }
 
@@ -2491,17 +2456,11 @@ input UserCreateInput {
   links: LinkCreateManyWithoutPostedByInput
   votes: VoteCreateManyWithoutUserInput
   _likes: LikeCreateManyWithout_creatorInput
-  _dislikes: DislikeCreateManyWithout_creatorInput
   _events: EventCreateManyWithout_creatorInput
 }
 
 input UserCreateOneInput {
   create: UserCreateInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithout_dislikesInput {
-  create: UserCreateWithout_dislikesInput
   connect: UserWhereUniqueInput
 }
 
@@ -2525,16 +2484,6 @@ input UserCreateOneWithoutVotesInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateWithout_dislikesInput {
-  name: String!
-  email: String!
-  password: String!
-  links: LinkCreateManyWithoutPostedByInput
-  votes: VoteCreateManyWithoutUserInput
-  _likes: LikeCreateManyWithout_creatorInput
-  _events: EventCreateManyWithout_creatorInput
-}
-
 input UserCreateWithout_eventsInput {
   name: String!
   email: String!
@@ -2542,7 +2491,6 @@ input UserCreateWithout_eventsInput {
   links: LinkCreateManyWithoutPostedByInput
   votes: VoteCreateManyWithoutUserInput
   _likes: LikeCreateManyWithout_creatorInput
-  _dislikes: DislikeCreateManyWithout_creatorInput
 }
 
 input UserCreateWithout_likesInput {
@@ -2551,7 +2499,6 @@ input UserCreateWithout_likesInput {
   password: String!
   links: LinkCreateManyWithoutPostedByInput
   votes: VoteCreateManyWithoutUserInput
-  _dislikes: DislikeCreateManyWithout_creatorInput
   _events: EventCreateManyWithout_creatorInput
 }
 
@@ -2561,7 +2508,6 @@ input UserCreateWithoutLinksInput {
   password: String!
   votes: VoteCreateManyWithoutUserInput
   _likes: LikeCreateManyWithout_creatorInput
-  _dislikes: DislikeCreateManyWithout_creatorInput
   _events: EventCreateManyWithout_creatorInput
 }
 
@@ -2571,7 +2517,6 @@ input UserCreateWithoutVotesInput {
   password: String!
   links: LinkCreateManyWithoutPostedByInput
   _likes: LikeCreateManyWithout_creatorInput
-  _dislikes: DislikeCreateManyWithout_creatorInput
   _events: EventCreateManyWithout_creatorInput
 }
 
@@ -2652,7 +2597,6 @@ input UserUpdateDataInput {
   links: LinkUpdateManyWithoutPostedByInput
   votes: VoteUpdateManyWithoutUserInput
   _likes: LikeUpdateManyWithout_creatorInput
-  _dislikes: DislikeUpdateManyWithout_creatorInput
   _events: EventUpdateManyWithout_creatorInput
 }
 
@@ -2663,7 +2607,6 @@ input UserUpdateInput {
   links: LinkUpdateManyWithoutPostedByInput
   votes: VoteUpdateManyWithoutUserInput
   _likes: LikeUpdateManyWithout_creatorInput
-  _dislikes: DislikeUpdateManyWithout_creatorInput
   _events: EventUpdateManyWithout_creatorInput
 }
 
@@ -2678,13 +2621,6 @@ input UserUpdateOneRequiredInput {
   connect: UserWhereUniqueInput
   update: UserUpdateDataInput
   upsert: UserUpsertNestedInput
-}
-
-input UserUpdateOneRequiredWithout_dislikesInput {
-  create: UserCreateWithout_dislikesInput
-  connect: UserWhereUniqueInput
-  update: UserUpdateWithout_dislikesDataInput
-  upsert: UserUpsertWithout_dislikesInput
 }
 
 input UserUpdateOneRequiredWithout_likesInput {
@@ -2719,16 +2655,6 @@ input UserUpdateOneWithoutLinksInput {
   upsert: UserUpsertWithoutLinksInput
 }
 
-input UserUpdateWithout_dislikesDataInput {
-  name: String
-  email: String
-  password: String
-  links: LinkUpdateManyWithoutPostedByInput
-  votes: VoteUpdateManyWithoutUserInput
-  _likes: LikeUpdateManyWithout_creatorInput
-  _events: EventUpdateManyWithout_creatorInput
-}
-
 input UserUpdateWithout_eventsDataInput {
   name: String
   email: String
@@ -2736,7 +2662,6 @@ input UserUpdateWithout_eventsDataInput {
   links: LinkUpdateManyWithoutPostedByInput
   votes: VoteUpdateManyWithoutUserInput
   _likes: LikeUpdateManyWithout_creatorInput
-  _dislikes: DislikeUpdateManyWithout_creatorInput
 }
 
 input UserUpdateWithout_likesDataInput {
@@ -2745,7 +2670,6 @@ input UserUpdateWithout_likesDataInput {
   password: String
   links: LinkUpdateManyWithoutPostedByInput
   votes: VoteUpdateManyWithoutUserInput
-  _dislikes: DislikeUpdateManyWithout_creatorInput
   _events: EventUpdateManyWithout_creatorInput
 }
 
@@ -2755,7 +2679,6 @@ input UserUpdateWithoutLinksDataInput {
   password: String
   votes: VoteUpdateManyWithoutUserInput
   _likes: LikeUpdateManyWithout_creatorInput
-  _dislikes: DislikeUpdateManyWithout_creatorInput
   _events: EventUpdateManyWithout_creatorInput
 }
 
@@ -2765,18 +2688,12 @@ input UserUpdateWithoutVotesDataInput {
   password: String
   links: LinkUpdateManyWithoutPostedByInput
   _likes: LikeUpdateManyWithout_creatorInput
-  _dislikes: DislikeUpdateManyWithout_creatorInput
   _events: EventUpdateManyWithout_creatorInput
 }
 
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
-}
-
-input UserUpsertWithout_dislikesInput {
-  update: UserUpdateWithout_dislikesDataInput!
-  create: UserCreateWithout_dislikesInput!
 }
 
 input UserUpsertWithout_eventsInput {
@@ -2977,9 +2894,6 @@ input UserWhereInput {
   _likes_every: LikeWhereInput
   _likes_some: LikeWhereInput
   _likes_none: LikeWhereInput
-  _dislikes_every: DislikeWhereInput
-  _dislikes_some: DislikeWhereInput
-  _dislikes_none: DislikeWhereInput
   _events_every: EventWhereInput
   _events_some: EventWhereInput
   _events_none: EventWhereInput

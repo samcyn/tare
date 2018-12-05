@@ -1,4 +1,4 @@
-# import Event, Category, EventOrderByInput, Like, Link, LinkSubscriptionPayload, Vote, VoteSubscriptionPayload, LinkOrderByInput from "./generated/prisma.graphql"
+# import Event, Category, EventOrderByInput, Like, Dislike Link, LinkSubscriptionPayload, Vote, VoteSubscriptionPayload, LinkOrderByInput from "./generated/prisma.graphql"
 scalar Upload
 
 type AuthPayload {
@@ -37,7 +37,7 @@ type Mutation {
   upVoteEvent(eventId: ID!): Like
 
   # D O W N V O T E -  E V E N T
-  downVoteEvent(eventId: ID!): Like
+  downVoteEvent(eventId: ID!): Dislike
 
 
   # C R E A T E - C A T E G O R Y
