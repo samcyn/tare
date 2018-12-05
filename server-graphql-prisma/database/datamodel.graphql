@@ -7,21 +7,28 @@ type Link {
   votes: [Vote!]!
 }
 
+type File {
+  id: ID! @unique
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+
 type Event {
   id: ID! @unique
-  category: Category!
   createdAt: DateTime!
-  coverImage: File
+  imageFile: File
   description: String!
-  date: DateTime!
   duration: Int!
   deleted: Boolean! @default(value: "false")
-  draft: Boolean! @default(value: "false")
-  likes: [Like!]!
   location: String!
   title: String!
   published: Boolean! @default(value: "false")
-  postedBy: User
+  _creator: User
+  _likes: [Like!]! 
+  # @relation(name: "LikedByUser" onDelete: CASCADE)
+  # _dislikes: [Like!]! @relation(name: "DislikedByUser" onDelete: CASCADE)
+  _category: Category!
 }
 
 type User {
@@ -31,28 +38,24 @@ type User {
   password: String!
   links: [Link!]!
   votes: [Vote!]!
+  _likes: [Like!]! # L I S T - O F - L I K E S - A - U S E R - H A S - C R E A T E D
+  _events: [Event!]! #  L I S T - O F - E V E N T - A - U S E R - H A S - C R E A T E D
 }
 
 type Vote {
   id: ID! @unique
   link: Link!
-  user: User!
+  user: User! 
 }
 
 type Like {
   id: ID! @unique
-  event: Event!
-  user: User!
+  _event: Event!
+  _creator: User!
 }
 
 type Category {
   id: ID! @unique
-  title: String
-}
-
-type File {
-  id: ID! @unique
-  filename: String!
-  mimetype: String!
-  encoding: String!
+  title: String @unique
+  _creator: User!
 }

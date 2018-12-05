@@ -1,11 +1,19 @@
+/**
+ * created by Samson Iyanda on 28/11/18
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
+
 const { GraphQLServer } = require('graphql-yoga');
 const { Prisma } = require('prisma-binding');
 
 // R E S O L V E R S
-const Query = require('./resolvers/Query');
-const Mutation = require('./resolvers/Mutation');
+const Query = require('./resolvers/Queries');
+const Mutation = require('./resolvers/Mutations');
 const AuthPayload = require('./resolvers/AuthPayload');
-const Subscription = require('./resolvers/Subscription');
+const Subscription = require('./resolvers/Subscriptions');
 const Feed = require('./resolvers/Feed');
 
 const resolvers = {

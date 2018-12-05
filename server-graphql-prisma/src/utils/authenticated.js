@@ -1,3 +1,11 @@
+/**
+ * created by Samson Iyanda on 28/11/18
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
+
 const jwt = require('jsonwebtoken');
 
 const APP_SECRET = 'GraphQL-is-aw3some';

@@ -5,15 +5,17 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "generate-graphql-types": "prisma deploy",
+    "db-deploy": "prisma deploy",
     "graphql-playground": "graphql playground",
+    "dev": "nodemon src/index.js & yarn run graphql-playground",
     "lint": "eslint"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "graphql-yoga": "^1.16.7",
     "jsonwebtoken": "^8.4.0",
-    "prisma-binding": "^2.2.1"
+    "prisma-binding": "^2.2.1",
+    "shortid": "^2.2.14"
   },
   "repository": " https://github.com/samcyn/tare.git",
   "author": "samcyn",
@@ -24,6 +26,7 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.1"
+    "eslint-plugin-react": "^7.11.1",
+    "nodemon": "^1.18.7"
   }
 }

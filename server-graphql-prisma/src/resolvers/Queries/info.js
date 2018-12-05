@@ -6,8 +6,10 @@
  *
  */
 
-function user(root, args, context, info) {
-  return context.db.query.user({ where: { id: root.user.id } }, info);
+
+// I N F O - R E S O L V E R
+function info() {
+  return 'Welcome To The Official API For Tare Project Version 1.0.0';
 }
 
-module.exports = { user };
+module.export = info;

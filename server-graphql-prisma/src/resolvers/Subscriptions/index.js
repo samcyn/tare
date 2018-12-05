@@ -6,8 +6,10 @@
  *
  */
 
-function user(root, args, context, info) {
-  return context.db.query.user({ where: { id: root.user.id } }, info);
-}
+const newLink = require('./newLink');
+const newVote = require('./newLink');
 
-module.exports = { user };
+module.exports = {
+  newLink,
+  newVote,
+};
