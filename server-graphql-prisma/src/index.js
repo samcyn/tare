@@ -12,16 +12,20 @@ const { Prisma } = require('prisma-binding');
 // R E S O L V E R S
 const Query = require('./resolvers/Queries');
 const Mutation = require('./resolvers/Mutations');
-const AuthPayload = require('./resolvers/AuthPayload');
 const Subscription = require('./resolvers/Subscriptions');
-const Feed = require('./resolvers/Feed');
+const AuthPayload = require('./resolvers/AuthPayload');
+const EventFeed = require('./resolvers/EventFeed');
+const UserFeed = require('./resolvers/UserFeed');
+const CategoryFeed = require('./resolvers/CategoryFeed');
 
 const resolvers = {
   Query,
   Mutation,
   AuthPayload,
   Subscription,
-  Feed,
+  UserFeed,
+  EventFeed,
+  CategoryFeed,
 };
 
 // I N I T I A L I Z E - G R A P H Q L - S E R V E R

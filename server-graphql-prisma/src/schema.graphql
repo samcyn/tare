@@ -1,4 +1,4 @@
-# import Event, Category, EventOrderByInput, Like, Dislike Link, LinkSubscriptionPayload, Vote, VoteSubscriptionPayload, LinkOrderByInput from "./generated/prisma.graphql"
+# import Event, Category, UserOrderByInput, EventOrderByInput, CategoryOrderByInput, Like, Dislike, EventSubscriptionPayload, LikeSubscriptionPayload, DislikeSubscriptionPayload, UserSubscriptionPayload from "./generated/prisma.graphql"
 scalar Upload
 
 type AuthPayload {
@@ -7,20 +7,33 @@ type AuthPayload {
 }
 
 type User {
-  id: ID!
   name: String!
   email: String!
-  links: [Link!]!
   events: [Event!]!
 }
 
 type Query {
   info: String!
-  feed(filter: String, skip: Int, first: Int, orderBy: EventOrderByInput): Feed!
+  getUser(userId: ID, email: String): User
+  getUsers(filter: String, skip: Int, first: Int, orderBy: UserOrderByInput): UserFeed!
+  getEvent(eventId: ID!): Event!
+  getEvents(filter: String, skip: Int, first: Int, orderBy: EventOrderByInput): EventFeed!
+  getCategory(categoryId: ID, title: String): Category!
+  getCategories(filter: String, skip: Int, first: Int, orderBy: CategoryOrderByInput): CategoryFeed!
 }
 
-type Feed {
+type UserFeed {
+  users: [User!]!
+  count: Int!
+}
+
+type EventFeed {
   events: [Event!]!
+  count: Int!
+}
+
+type CategoryFeed {
+  categories: [Category!]!
   count: Int!
 }
 
@@ -29,9 +42,12 @@ type Mutation {
   createEvent(title: String!, location: String!, duration: Int!, 
     description: String, categoryId: String!, file: Upload): Event!
 
-  # UPDATE - E V E N T
+  # U P D A T E - E V E N T
   updateEvent(eventId: ID!, title: String, location: String, duration: Int, 
     description: String, categoryId: String, file: Upload): Event!
+  
+  # DE L E T E - E V E N T
+  deleteEvent(eventId: ID!): Event!
   
   # U P V O T E  - E V E N T
   upVoteEvent(eventId: ID!): Like
@@ -43,21 +59,28 @@ type Mutation {
   # C R E A T E - C A T E G O R Y
   createCategory(title: String): Category
 
-  #post link
-  post(url: String!, description: String!): Link!
-  
-  # Update a link
-  updateLink(id: ID!, url: String, description: String): Link
+  # U P D A T E - C A T E G O R Y
+  updateCategory(categoryId: ID!, title: String): Category
 
-  # Delete a link
-  deleteLink(id: ID!): Link
+  # D E L E T E - C A T E G O R Y
+  deleteCategory(categoryId: ID!): Category
 
+  # R E G I S T E R - U S E R
   signup(email: String!, password: String!, name: String!): AuthPayload
+
+  # L O G I N - U S E R
   login(email: String!, password: String!): AuthPayload
-  vote(linkId: ID!): Vote
+
+  # U P D A T E - U S E R
+  updateUser(userId: ID!): User
+
+  # D E L E T E - U S E R
+  deleteUser(userId: ID!): User
 }
 
 type Subscription {
-  newLink: LinkSubscriptionPayload
-  newVote: VoteSubscriptionPayload
+  newUser: UserSubscriptionPayload
+  newEvent: EventSubscriptionPayload
+  newLike: LikeSubscriptionPayload
+  newDislike: DislikeSubscriptionPayload
 }

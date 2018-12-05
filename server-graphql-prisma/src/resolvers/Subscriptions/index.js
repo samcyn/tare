@@ -5,11 +5,14 @@
  * https://samsoniyanda.herokuapp.com
  *
  */
-
-const newLink = require('./newLink');
-const newVote = require('./newLink');
+const newUser = require('./newUser');
+const newEvent = require('./newEvent');
+const newLike = require('./newLike');
+const newDislike = require('./newDislike');
 
 module.exports = {
-  newLink,
-  newVote,
+  newUser,
+  newEvent,
+  newLike,
+  newDislike,
 };

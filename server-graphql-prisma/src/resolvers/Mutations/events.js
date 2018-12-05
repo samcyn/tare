@@ -8,20 +8,6 @@
 const { getUserId } = require('../../utils/authenticated');
 const { processUpload } = require('../../utils/upload');
 
-function post(parent, args, context, info) {
-  // get user id when user wants to post link...
-  const userId = getUserId(context);
-  return context.db.mutation.createLink(
-    {
-      data: {
-        url: args.url,
-        description: args.description,
-        postedBy: { connect: { id: userId } },
-      },
-    },
-    info,
-  );
-}
 
 async function createEvent(parent, args, context, info) {
   let newFile;
@@ -96,30 +82,67 @@ async function updateEvent(parent, args, context, info) {
     // P R O C E S S - U P L O A D E D - I M A G E (S)
     const { filename, mimetype, encoding } = processUpload(args.file);
 
-    // C R E A T E - N E W - F I L E - T Y P E - S E L E C T I N G - O N L Y - T H E - I D
-    newFile = await context.db.mutation.createFile({
-      data: {
-        filename,
-        mimetype,
-        encoding,
-      },
-    }, 'id');
+    // C H E C K - T O - S E E - I F - F I L E - E X I S T
+    const fileExists = await context.db.exists.File({
+      filename,
+      mimetype,
+      encoding,
+    });
+    /* I F - F I L E - D O E S N 'T - E X I S T -
+    C R E A T E - A - N E W - O N E - E L S E - D O N 'T */
+    if (!fileExists) {
+      // C R E A T E - N E W - F I L E - T Y P E - S E L E C T I N G - O N L Y - T H E - I D
+      newFile = await context.db.mutation.createFile({
+        data: {
+          filename,
+          mimetype,
+          encoding,
+        },
+      }, 'id');
+    }
   }
 
   const {
     title, description, duration, location, categoryId,
   } = args;
-  // C R E A T E - N E W - E V E N T - A N D - C O N N E C T - A L L - R E L A T I O N S H I P S
-  return context.db.mutation.createEvent(
+  // U P D A T E - E V E N T - A N D - C O N N E C T - A L L - R E L A T I O N S H I P S
+  return context.db.mutation.updateEvent(
     {
       data: {
         title,
         description,
         duration,
         location,
-        imageFile: newFile ? { connect: { id: newFile.id } } : {},
-        _creator: { connect: { id: userId } },
+        imageFile: newFile ? { connect: { id: newFile.id } } : null,
         _category: { connect: { id: categoryId } },
+      },
+      where: { id: args.eventId },
+    }, info,
+  );
+}
+
+async function deleteEvent(parent, args, context, info) {
+  // G E T - T H E - U S E R - I D
+  const userId = getUserId(context);
+
+  // V E R I F Y - E V E N T - C R E A T O R
+  const eventOwnerExist = await context.db.exists.Event({
+    _creator: { id: userId },
+    id: args.eventId,
+  });
+  // I F - C R E A T O R - I S - N O T - F O U N D
+  if (!eventOwnerExist) {
+    throw new Error('Can\'t delete someone else event');
+  }
+
+  // U P D A T E - E V E N T - D E L E T E D - F I E L D - I S - T R U E
+  return context.db.mutation.updateEvent(
+    {
+      data: {
+        deleted: true,
+      },
+      where: {
+        id: args.eventId,
       },
     }, info,
   );
@@ -196,9 +219,9 @@ async function downVoteEvent(parent, args, context, info) {
 }
 
 module.exports = {
-  post,
   createEvent,
   updateEvent,
+  deleteEvent,
   upVoteEvent,
   downVoteEvent,
 };

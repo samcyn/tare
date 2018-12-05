@@ -27,29 +27,61 @@ async function createCategory(parent, args, context, info) {
   );
 }
 
-async function vote(parent, args, context, info) {
+async function updateCategory(parent, args, context, info) {
+  // G E T - T H E - U S E R - I D
   const userId = getUserId(context);
 
-  const linkExists = await context.db.exists.Vote({
-    user: { id: userId },
-    link: { id: args.linkId },
+  // V E R I F Y - C A T E G O R Y - C R E A T O R
+  const categoryOwnerExist = await context.db.exists.Category({
+    _creator: { id: userId },
+    id: args.categoryId,
   });
-  if (linkExists) {
-    throw new Error(`Already voted for link: ${args.linkId}`);
+
+  // I F - C R E A T O R - I S - N O T - F O U N D
+  if (!categoryOwnerExist) {
+    throw new Error('Can\'t update someone else CATEGORY');
   }
 
-  return context.db.mutation.createVote(
+  // MA K E - S U R E - T I T L E - I S - T R I M M E D - A N D - L O W E R C A S E
+  const title = args.title.trim().toLowerCase();
+
+  return context.db.mutation.updateCategory(
     {
       data: {
-        user: { connect: { id: userId } },
-        link: { connect: { id: args.linkId } },
+        title,
       },
-    },
-    info,
+      where: {
+        id: args.categoryId,
+      },
+    }, info,
   );
 }
 
+async function deleteCategory(parent, args, context, info) {
+  // G E T - T H E - U S E R - I D
+  const userId = getUserId(context);
+
+  // V E R I F Y - C A T E G O R Y - C R E A T O R
+  const categoryOwnerExist = await context.db.exists.Category({
+    _creator: { id: userId },
+    id: args.categoryId,
+  });
+
+  // I F - C R E A T O R - I S - N O T - F O U N D
+  if (!categoryOwnerExist) {
+    throw new Error('Can\'t delete someone else CATEGORY');
+  }
+
+  return context.db.mutation.deleteCategory(
+    {
+      where: {
+        id: args.categoryId,
+      },
+    }, info,
+  );
+}
 module.exports = {
   createCategory,
-  vote,
+  updateCategory,
+  deleteCategory,
 };

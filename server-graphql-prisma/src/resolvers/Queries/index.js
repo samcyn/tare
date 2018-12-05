@@ -7,9 +7,28 @@
  */
 
 const info = require('./info');
-const feed = require('./feed');
+
+const {
+  getUser,
+  getUsers,
+} = require('./users');
+
+const {
+  getEvent,
+  getEvents,
+} = require('./events');
+
+const {
+  getCategory,
+  getCategories,
+} = require('./categories');
 
 module.exports = {
   info,
-  feed,
+  getUser,
+  getUsers,
+  getEvent,
+  getEvents,
+  getCategory,
+  getCategories,
 };

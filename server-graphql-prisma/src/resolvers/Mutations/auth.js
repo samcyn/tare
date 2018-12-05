@@ -9,7 +9,7 @@
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { APP_SECRET } = require('../../utils/authenticated');
+const { getUserId, APP_SECRET } = require('../../utils/authenticated');
 
 async function signup(parent, args, context) {
   // hashed password in the arguments...
@@ -52,7 +52,46 @@ async function login(parent, args, context) {
   };
 }
 
+async function updateUser(parent, args, context, info) {
+  // G E T - T H E - L O G G E D - I N - U S E R - I D
+  const userId = getUserId(context);
+
+  const user = await context.db.query.user({ where: { id: userId } }, 'isAdmin');
+
+  if (userId !== args.userId || !user.isAdmin) {
+    throw new Error('Not Authorised to update another user credentials');
+  }
+
+  // hashed password in the arguments...
+  const password = await bcrypt.hash(args.password, 10);
+  // create user into db.. note user only contain id..
+  return context.db.mutation.updateUser({
+    data: { ...args, password },
+    where: { id: userId },
+  }, info);
+}
+
+
+async function deleteUser(parent, args, context, info) {
+  // G E T - T H E - L O G G E D - I N - U S E R - I D
+  const userId = getUserId(context);
+
+  const user = await context.db.query.user({ where: { id: userId } }, 'isAdmin');
+
+  if (userId !== args.userId || !user.isAdmin) {
+    throw new Error('Not Authorised to delete another user credentials');
+  }
+
+  // create user into db.. note user only contain id..
+  return context.db.mutation.updateUser({
+    data: { deleted: true },
+    where: { id: userId },
+  }, info);
+}
+
 module.exports = {
   signup,
   login,
+  updateUser,
+  deleteUser,
 };

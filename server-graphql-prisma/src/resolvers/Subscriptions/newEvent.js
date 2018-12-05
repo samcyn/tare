@@ -5,18 +5,15 @@
  * https://samsoniyanda.herokuapp.com
  *
  */
-
-
-function newVoteSubscribe(parent, args, context, info) {
-  return context.db.subscription.vote(
+function newEventSubscribe(parent, args, context, info) {
+  return context.db.subscription.event(
     { where: { mutation_in: ['CREATED'] } },
     info,
   );
 }
 
-const newVote = {
-  subscribe: newVoteSubscribe,
+const newEvent = {
+  subscribe: newEventSubscribe,
 };
 
-
-module.exports = newVote;
+module.exports = newEvent;

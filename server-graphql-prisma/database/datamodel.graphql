@@ -1,19 +1,9 @@
-type Link {
-  id: ID! @unique
-  createdAt: DateTime!
-  description: String!
-  url: String!
-  postedBy: User
-  votes: [Vote!]!
-}
-
 type File {
   id: ID! @unique
   filename: String!
   mimetype: String!
   encoding: String!
 }
-
 type Event {
   id: ID! @unique
   createdAt: DateTime!
@@ -35,16 +25,10 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  links: [Link!]!
-  votes: [Vote!]!
+  isAdmin: Boolean @default(value:"false")
+  deleted: Boolean @default(value: "false")
   _likes: [Like!]! # L I S T - O F - L I K E S - A - U S E R - H A S - C R E A T E D
   _events: [Event!]! #  L I S T - O F - E V E N T - A - U S E R - H A S - C R E A T E D
-}
-
-type Vote {
-  id: ID! @unique
-  link: Link!
-  user: User! 
 }
 
 type Like {

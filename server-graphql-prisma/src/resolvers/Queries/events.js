@@ -6,8 +6,20 @@
  *
  */
 
-// F E E D - R E S O L V E R
-async function feed(parent, args, context) {
+// G E T - A N - E V E N T
+async function getEvent(parent, args, context, info) {
+  return context.db.query.event(
+    {
+      where: {
+        id: args.eventId,
+      },
+    },
+    info,
+  );
+}
+
+// A L L - E V E N T S
+async function getEvents(parent, args, context) {
   const where = args.filter
     ? {
       OR: [
@@ -45,4 +57,7 @@ async function feed(parent, args, context) {
 }
 
 
-module.exports = feed;
+module.exports = {
+  getEvent,
+  getEvents,
+};
