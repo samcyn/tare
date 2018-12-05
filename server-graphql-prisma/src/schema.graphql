@@ -1,0 +1,63 @@
+# import Event, Category, EventOrderByInput, Like, Link, LinkSubscriptionPayload, Vote, VoteSubscriptionPayload, LinkOrderByInput from "./generated/prisma.graphql"
+scalar Upload
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  links: [Link!]!
+  events: [Event!]!
+}
+
+type Query {
+  info: String!
+  feed(filter: String, skip: Int, first: Int, orderBy: EventOrderByInput): Feed!
+}
+
+type Feed {
+  events: [Event!]!
+  count: Int!
+}
+
+type Mutation {
+  # C R E A T E - E V E N T
+  createEvent(title: String!, location: String!, duration: Int!, 
+    description: String, categoryId: String!, file: Upload): Event!
+
+  # UPDATE - E V E N T
+  updateEvent(eventId: ID!, title: String, location: String, duration: Int, 
+    description: String, categoryId: String, file: Upload): Event!
+  
+  # U P V O T E  - E V E N T
+  upVoteEvent(eventId: ID!): Like
+
+  # D O W N V O T E -  E V E N T
+  downVoteEvent(eventId: ID!): Like
+
+
+  # C R E A T E - C A T E G O R Y
+  createCategory(title: String): Category
+
+  #post link
+  post(url: String!, description: String!): Link!
+  
+  # Update a link
+  updateLink(id: ID!, url: String, description: String): Link
+
+  # Delete a link
+  deleteLink(id: ID!): Link
+
+  signup(email: String!, password: String!, name: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+  vote(linkId: ID!): Vote
+}
+
+type Subscription {
+  newLink: LinkSubscriptionPayload
+  newVote: VoteSubscriptionPayload
+}
