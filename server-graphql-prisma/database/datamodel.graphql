@@ -26,8 +26,7 @@ type Event {
   published: Boolean! @default(value: "false")
   _creator: User
   _likes: [Like!]! 
-  # @relation(name: "LikedByUser" onDelete: CASCADE)
-  # _dislikes: [Like!]! @relation(name: "DislikedByUser" onDelete: CASCADE)
+  _dislikes: [Dislike!]!
   _category: Category!
 }
 
@@ -49,6 +48,12 @@ type Vote {
 }
 
 type Like {
+  id: ID! @unique
+  _event: Event!
+  _creator: User!
+}
+
+type Dislike {
   id: ID! @unique
   _event: Event!
   _creator: User!

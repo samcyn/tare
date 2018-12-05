@@ -126,8 +126,10 @@ async function updateEvent(parent, args, context, info) {
 }
 
 async function upVoteEvent(parent, args, context, info) {
+  // G E T - U S E R - I D - F R O M - C O N T E X T
   const userId = getUserId(context);
-
+  /* S A N I T Y - C H E C K - T O - S E E - I F - U S E R -
+  A L R E A D Y - L I K E D - E V E N T - B E F O R E */
   const alreadyUpVotedEvent = await context.db.exists.Like({
     _creator: { id: userId },
     _event: { id: args.eventId },
@@ -136,7 +138,18 @@ async function upVoteEvent(parent, args, context, info) {
   if (alreadyUpVotedEvent) {
     throw new Error(`Already voted for event: ${args.eventId}`);
   }
+  /* S A N I T Y - C H E C K - T O - S E E - I F - U S E R -
+  A L R E A D Y - D I S L I K E D - E V E N T - B E F O R E */
+  const disLike = await context.db.query.dislikes({
+    where: { _creator: { id_contains: userId }, _event: { id_contains: args.eventId } },
+  }, '{ id }');
 
+  // I F - T R U E, - D E L E T E - U S E R - R E C O R D - I N - D I S L I K E - T Y P E
+  if (disLike && disLike[0]) {
+    const disLikeId = disLike[0].id;
+    await context.db.mutation.deleteDislike({ where: { id: disLikeId } });
+  }
+  // A D D - U S E R - R E C O R D - T O - L I K E - T Y P E
   return context.db.mutation.createLike(
     {
       data: {
@@ -151,23 +164,27 @@ async function upVoteEvent(parent, args, context, info) {
 async function downVoteEvent(parent, args, context, info) {
   const userId = getUserId(context);
 
-  const alreadyDownVotedEvent = await context.db.exists.Like({
+  const alreadyDownVotedEvent = await context.db.exists.Dislike({
     _creator: { id: userId },
     _event: { id: args.eventId },
   });
 
   if (alreadyDownVotedEvent) {
-    const like = await context.db.query.likes({
-      where: { _creator: { id_contains: userId }, _event: { id_contains: args.eventId } },
-    }, '{ id }');
-
-    if (like && like[0]) {
-      const likeId = like[0].id;
-      return context.db.mutation.deleteLike({ where: { id: likeId } }, info);
-    }
+    throw new Error(`Already downvoted for event: ${args.eventId}`);
   }
+  /* S A N I T Y - C H E C K - T O - S E E - I F - U S E R -
+  A L R E A D Y - L I K E D - E V E N T - B E F O R E */
+  const like = await context.db.query.likes({
+    where: { _creator: { id_contains: userId }, _event: { id_contains: args.eventId } },
+  }, '{ id }');
 
-  return context.db.mutation.createLike(
+  // I F - T R U E, - D E L E T E - U S E R - R E C O R D - I N - L I K E - T Y P E
+  if (like && like[0]) {
+    const likeId = like[0].id;
+    await context.db.mutation.deleteLike({ where: { id: likeId } });
+  }
+  // A D D - U S E R - R E C O R D - T O - D I S L I K E - T Y P E
+  return context.db.mutation.createDislike(
     {
       data: {
         _creator: { connect: { id: userId } },
