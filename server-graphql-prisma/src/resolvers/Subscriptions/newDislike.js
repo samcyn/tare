@@ -5,15 +5,17 @@
  * https://samsoniyanda.herokuapp.com
  *
  */
-function newLinkSubscribe(parent, args, context, info) {
-  return context.db.subscription.link(
+
+
+function newDislikeSubscribe(parent, args, context, info) {
+  return context.db.subscription.dislike(
     { where: { mutation_in: ['CREATED'] } },
     info,
   );
 }
 
-const newLink = {
-  subscribe: newLinkSubscribe,
+const newDislike = {
+  subscribe: newDislikeSubscribe,
 };
 
-module.exports = newLink;
+module.exports = newDislike;

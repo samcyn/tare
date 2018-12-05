@@ -5,24 +5,36 @@
  * https://samsoniyanda.herokuapp.com
  *
  */
-const { signup, login } = require('./auth');
+const {
+  signup,
+  login,
+  updateUser,
+  deleteUser,
+} = require('./auth');
 const {
   createEvent,
   updateEvent,
+  deleteEvent,
   upVoteEvent,
   downVoteEvent,
-  post,
 } = require('./events');
-const { createCategory, vote } = require('./category');
+const {
+  createCategory,
+  updateCategory,
+  deleteCategory,
+} = require('./category');
 
 module.exports = {
   signup,
   login,
-  post,
-  vote,
+  updateUser,
+  deleteUser,
   createEvent,
   updateEvent,
+  deleteEvent,
   upVoteEvent,
   downVoteEvent,
   createCategory,
+  updateCategory,
+  deleteCategory,
 };
