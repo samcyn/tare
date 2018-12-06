@@ -72,7 +72,7 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload
 
   # U P D A T E - U S E R
-  updateUser(userId: ID!): User
+  updateUser(userId: ID!, email: String, password: String, name: String): User
 
   # D E L E T E - U S E R
   deleteUser(userId: ID!): User
