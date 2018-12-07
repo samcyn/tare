@@ -2,6 +2,6 @@ yarn.lock
 node_modules/
 yarn-error.log
 .vscode
-server/package-lock.json
+package-lock.json
 .env
 variables.env
