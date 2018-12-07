@@ -2,4 +2,5 @@ yarn.lock
 node_modules/
 yarn-error.log
 .vscode
+package-lock.json
 server/package-lock.json
