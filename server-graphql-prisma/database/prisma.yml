@@ -1,12 +1,12 @@
 # The HTTP endpoint for your Prisma API
 #endpoint: ''
-endpoint: https://eu1.prisma.sh/samson-iyanda-afb0fd/database/dev
+endpoint: ${env:PRISMA_ENDPOINT}
 
 # Points to the file that holds your data model
 datamodel: datamodel.graphql
 
 # You can only access the API when providing JWTs that are signed with this secret
-secret: mysecret123
+secret: ${env:PRISMA_SECRET}
 
 # Deploy hook
 hooks:
