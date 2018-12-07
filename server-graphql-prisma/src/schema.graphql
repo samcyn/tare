@@ -1,0 +1,86 @@
+# import Event, Category, UserOrderByInput, EventOrderByInput, CategoryOrderByInput, Like, Dislike, EventSubscriptionPayload, LikeSubscriptionPayload, DislikeSubscriptionPayload, UserSubscriptionPayload from "./generated/prisma.graphql"
+scalar Upload
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  name: String!
+  email: String!
+  events: [Event!]!
+}
+
+type Query {
+  info: String!
+  getUser(userId: ID, email: String): User
+  getUsers(filter: String, skip: Int, first: Int, orderBy: UserOrderByInput): UserFeed!
+  getEvent(eventId: ID!): Event!
+  getEvents(filter: String, skip: Int, first: Int, orderBy: EventOrderByInput): EventFeed!
+  getCategory(categoryId: ID, title: String): Category!
+  getCategories(filter: String, skip: Int, first: Int, orderBy: CategoryOrderByInput): CategoryFeed!
+}
+
+type UserFeed {
+  users: [User!]!
+  count: Int!
+}
+
+type EventFeed {
+  events: [Event!]!
+  count: Int!
+}
+
+type CategoryFeed {
+  categories: [Category!]!
+  count: Int!
+}
+
+type Mutation {
+  # C R E A T E - E V E N T
+  createEvent(title: String!, location: String!, duration: Int!, 
+    description: String, categoryId: String!, file: Upload): Event!
+
+  # U P D A T E - E V E N T
+  updateEvent(eventId: ID!, title: String, location: String, duration: Int, 
+    description: String, categoryId: String, file: Upload): Event!
+  
+  # DE L E T E - E V E N T
+  deleteEvent(eventId: ID!): Event!
+  
+  # U P V O T E  - E V E N T
+  upVoteEvent(eventId: ID!): Like
+
+  # D O W N V O T E -  E V E N T
+  downVoteEvent(eventId: ID!): Dislike
+
+
+  # C R E A T E - C A T E G O R Y
+  createCategory(title: String): Category
+
+  # U P D A T E - C A T E G O R Y
+  updateCategory(categoryId: ID!, title: String): Category
+
+  # D E L E T E - C A T E G O R Y
+  deleteCategory(categoryId: ID!): Category
+
+  # R E G I S T E R - U S E R
+  signup(email: String!, password: String!, name: String!): AuthPayload
+
+  # L O G I N - U S E R
+  login(email: String!, password: String!): AuthPayload
+
+  # U P D A T E - U S E R
+  updateUser(userId: ID!, email: String, password: String, name: String): User
+
+  # D E L E T E - U S E R
+  deleteUser(userId: ID!): User
+}
+
+type Subscription {
+  newUser: UserSubscriptionPayload
+  newEvent: EventSubscriptionPayload
+  newLike: LikeSubscriptionPayload
+  newDislike: DislikeSubscriptionPayload
+}
