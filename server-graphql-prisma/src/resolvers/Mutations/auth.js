@@ -9,7 +9,8 @@
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { getUserId, APP_SECRET } = require('../../utils/authenticated');
+const { getUserId } = require('../../utils/authenticated');
+const { sendMail } = require('../../utils/email');
 
 async function signup(parent, args, context) {
   // hashed password in the arguments...
@@ -20,8 +21,12 @@ async function signup(parent, args, context) {
   }, '{ id }');
 
   // generate token....
-  const token = jwt.sign({ userId: user.id }, APP_SECRET);
+  const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
 
+  // S E N D - E M A I L - M E S S A G E - T O - U S E R
+  await sendMail({
+    to: args.email,
+  });
   // return token and user data this contain id alone but it will be resolve in authPayload
   return {
     token,
@@ -43,7 +48,7 @@ async function login(parent, args, context) {
   }
 
   // generate token
-  const token = jwt.sign({ userId: user.id }, APP_SECRET);
+  const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
 
   // return authpayload data
   return {
@@ -82,7 +87,7 @@ async function deleteUser(parent, args, context, info) {
     throw new Error('Not Authorised to delete another user credentials');
   }
 
-  // create user into db.. note user only contain id..
+  // U P D A T E - U S E R
   return context.db.mutation.updateUser({
     data: { deleted: true },
     where: { id: userId },

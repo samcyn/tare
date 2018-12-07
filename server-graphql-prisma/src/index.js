@@ -5,7 +5,7 @@
  * https://samsoniyanda.herokuapp.com
  *
  */
-
+require('dotenv').config();
 const { GraphQLServer } = require('graphql-yoga');
 const { Prisma } = require('prisma-binding');
 
@@ -40,7 +40,7 @@ const server = new GraphQLServer({
     db: new Prisma({
       typeDefs: 'src/generated/prisma.graphql',
       endpoint: 'https://eu1.prisma.sh/samson-iyanda-afb0fd/database/dev',
-      secret: 'mysecret123',
+      secret: process.env.PRISMA_SECRET,
       debug: true,
     }),
   }),
