@@ -1,0 +1,18 @@
+@import '../../base/variables';
+
+.dashboard__aside {
+  background: $navy;
+  height: 100%;
+  width: $asidePanelWidth;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  top: 0;
+}
+
+.dashboard__main {
+  background: $plum;
+  margin-left: auto;
+  min-height: 757px;
+  width: calc(100% - #{$asidePanelWidth});
+}
