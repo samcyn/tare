@@ -7,8 +7,8 @@
  */
 import React from 'react';
 
-const AdminEventsManagement = () => (
-  <div>Events Management Here on</div>
-); 
+const AdminCategoriesManagement = () => (
+  <div>AdminCategoriesManagement Management Here on</div>
+);
 
-export default AdminEventsManagement;
+export default AdminCategoriesManagement;

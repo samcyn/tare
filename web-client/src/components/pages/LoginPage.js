@@ -7,11 +7,10 @@
  */
 
 import React from 'react';
-import LandingPageLayout from '../LandingPage/LandingPageLayout';
 
 
-const LandingPage = () => (
-  <LandingPageLayout/>
+const Login = () => (
+  <div>Login</div>
 );
 
-export default LandingPage;
+export default Login;

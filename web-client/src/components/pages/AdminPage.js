@@ -7,11 +7,11 @@
  */
 
 import React from 'react';
-import LandingPageLayout from '../LandingPage/LandingPageLayout';
+import AdminLayout from '../Admin/AdminLayout/AdminLayout';
 
 
-const LandingPage = () => (
-  <LandingPageLayout/>
+const AdminPage = (props) => (
+  <AdminLayout { ...props }/>
 );
 
-export default LandingPage;
+export default AdminPage;

@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import NotFound from "../components/pages/NotFound";
-import Login from "../components/pages/Login";
-import Admin from "../components/pages/Admin";
-import Portal from "../components/pages/Portal";
+import NotFoundPage from "../components/pages/NotFoundPage";
+import LoginPage from "../components/pages/LoginPage";
+import AdminPage from "../components/pages/AdminPage";
+import PortalPage from "../components/pages/PortalPage";
 import LandingPage from "../components/pages/LandingPage";
-import SignUp from "../components/pages/Signup";
+import SignUpPage from "../components/pages/SignupPage";
 
 const Routers = () => {
   return (
@@ -13,11 +13,11 @@ const Routers = () => {
       <Fragment>
         <Switch>
           <Route exact path="/" component={ LandingPage } />
-          <Route path="/portal" component={ Portal } />
-          <Route path="/admin" component={ Admin } />
-          <Route path='/login' component={ Login } />
-          <Route path='/register' component={ SignUp } />
-          <Route component={ NotFound } />
+          <Route path="/portal" component={ PortalPage } />
+          <Route path="/admin" component={ AdminPage } />
+          <Route path='/login' component={ LoginPage } />
+          <Route Pagepath='/register' component={ SignUpPage } />
+          <Route component={ NotFoundPage } />
         </Switch>
       </Fragment>
     </Router>

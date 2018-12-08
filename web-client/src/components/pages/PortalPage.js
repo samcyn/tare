@@ -7,11 +7,10 @@
  */
 
 import React from 'react';
-import LandingPageLayout from '../LandingPage/LandingPageLayout';
 
 
-const LandingPage = () => (
-  <LandingPageLayout/>
+const Portal = () => (
+  <div>Portal</div>
 );
 
-export default LandingPage;
+export default Portal;

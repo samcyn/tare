@@ -7,11 +7,10 @@
  */
 
 import React from 'react';
-import LandingPageLayout from '../LandingPage/LandingPageLayout';
 
 
-const LandingPage = () => (
-  <LandingPageLayout/>
+const NotFound = () => (
+  <div>NotFound</div>
 );
 
-export default LandingPage;
+export default NotFound;
