@@ -3,5 +3,10 @@ node_modules/
 yarn-error.log
 .vscode
 package-lock.json
+<<<<<<< HEAD
 server/package-lock.json
 .expo
+=======
+.env
+variables.env
+>>>>>>> 9cb3031b450982ec9ca6471530c9264464059af7
