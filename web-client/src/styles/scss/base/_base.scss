@@ -1,0 +1,28 @@
+// H E L P E RS
+.align-self-center {
+  align-self: center;
+}
+
+.align-items-center {
+  align-items: center;
+}
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-space-between {
+  justify-content: space-between;
+}
+
+.is-borderless {
+  border: 0 !important;
+}
+
+.is-transparent {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.button, .button:active {
+  outline: none !important;
+}
