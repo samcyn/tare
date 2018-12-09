@@ -5,7 +5,7 @@
  * https://samsoniyanda.herokuapp.com
  *
  */
-import React from 'react';
+import React, { Component } from 'react';
 import { Switch, Route, Link } from "react-router-dom";
 
 import AdminDashboard from '../AdminDashboard/AdminDashboard';
@@ -15,14 +15,20 @@ import AdminCategoriesManagement from '../AdminCategoriesManagement/AdminCategor
 
 import './AdminLayout.css';
 
-const AdminHeader = () => (
+const AdminHeader = ({ sideBarController }) => (
   <nav className="navbar" role="navigation" aria-label="main navigation">
     <div className="navbar-brand">
       <a className="navbar-item" href="https://bulma.io">
         <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" alt="" />
       </a>
 
-      <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <a 
+        role="button" 
+        className="navbar-burger burger" 
+        aria-label="menu" 
+        aria-expanded="false" 
+        data-target="navbarBasicExample"
+        onClick={ sideBarController }>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -78,39 +84,60 @@ const AdminHeader = () => (
   </nav>
 );
 
-const AdminLayout = ({ match }) => (
-  <div className="dashboard">
-    {/* S I D E B A R */}
-    <aside className="dashboard__aside">
-      Sidebar
-      <ul>
-        <li>
-          <Link to={ match.url }>Dashboard</Link>
-        </li>
-        <li>
-          <Link to={ `${match.url}/users` }>Users</Link>
-        </li>
-        <li>
-          <Link to={ `${ match.url }/events` }>Events</Link>
-        </li>
-        <li>
-          <Link to={`${ match.url }/categories`}>Categories</Link>
-        </li>
-      </ul>
-    </aside>
-    {/*  M A I N C O N T E N T */}
-    <section className="dashboard__main">
-      <AdminHeader/>
-      <div className="dashboard__routes">
-        <Switch>
-          <Route exact path={ match.path } render={(props) => <AdminDashboard {...props} />} />
-          <Route exact path={ `${match.path}/users` } render={ (props) => <AdminUsersManagement { ...props } /> } />
-          <Route exact path={ `${match.path}/events` } isExact render={ (props) => <AdminEventsManagement { ...props }/> } />
-          <Route exact path={`${match.path}/categories`} isExact render={(props) => <AdminCategoriesManagement {...props} />} />      
-        </Switch>
+
+class AdminLayout extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isSideBarOpened: false,
+    }
+  }
+
+  // O PE N - O R - C L O S E - S I D E B A R 
+  toggleSideBarIsOpened = () => {
+    this.setState({
+      isSideBarOpened: !this.state.isSideBarOpened,
+    });
+  }
+
+  render () {
+    const { match } = this.props;
+    const { isSideBarOpened } = this.state;
+    return (
+      <div className={ !isSideBarOpened ? "dashboard" : "dashboard dashboard--open" }>
+        {/* S I D E B A R */}
+        <aside className="dashboard__aside">
+          Sidebar
+          <ul>
+            <li>
+              <Link to={ match.url }>Dashboard</Link>
+            </li>
+            <li>
+              <Link to={ `${match.url}/users` }>Users</Link>
+            </li>
+            <li>
+              <Link to={ `${match.url}/events` }>Events</Link>
+            </li>
+            <li>
+              <Link to={ `${match.url}/categories` }>Categories</Link>
+            </li>
+          </ul>
+        </aside>
+        {/*  M A I N C O N T E N T */}
+        <section className="dashboard__main">
+          <AdminHeader sideBarController={ this.toggleSideBarIsOpened } />
+          <div className="dashboard__routes">
+            <Switch>
+              <Route exact path={ match.path } render={(props) => <AdminDashboard {...props} />} />
+              <Route exact path={ `${match.path}/users` } render={(props) => <AdminUsersManagement {...props} />} />
+              <Route exact path={ `${match.path}/events` } isExact render={(props) => <AdminEventsManagement {...props} />} />
+              <Route exact path={ `${match.path}/categories` } isExact render={(props) => <AdminCategoriesManagement {...props} />} />
+            </Switch>
+          </div>
+        </section>
       </div>
-    </section>
-  </div>
-);
+    );
+  }
+}
 
 export default AdminLayout;

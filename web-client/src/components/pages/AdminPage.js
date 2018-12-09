@@ -7,11 +7,17 @@
  */
 
 import React from 'react';
+import { Redirect } from "react-router-dom";
+
 import AdminLayout from '../Admin/AdminLayout/AdminLayout';
 
 
-const AdminPage = (props) => (
-  <AdminLayout { ...props }/>
-);
+const AdminPage = (props) => {
+  // I F - U S E R - I S - N O T - L O G G E D - I N - R E D I R E C T - T O - S I G N U P - P A G E
+  if (false) {
+    return <Redirect to="/register"/>
+  }
+  return <AdminLayout { ...props }/>;
+};
 
 export default AdminPage;
