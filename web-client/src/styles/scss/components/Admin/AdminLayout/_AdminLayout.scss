@@ -1,4 +1,5 @@
 @import '../../../base/variables';
+@import '../../../base/mixins';
 
 .dashboard__aside {
   background: $grey-dark;
@@ -11,7 +12,7 @@
 }
 
 .dashboard__main {
-  background: $plum;
+  background: $grey;
   margin-left: auto;
   min-height: 100vh;
   transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
@@ -20,7 +21,11 @@
   z-index: 5;
 }
 
-@media (max-width: 991px) {
+.dashboard__routes {
+  padding: $spacing;
+}
+
+@media (max-width: 1087px) {
 
   .dashboard--open .dashboard__main {
     transform: translate(-$asidePanelWidth);

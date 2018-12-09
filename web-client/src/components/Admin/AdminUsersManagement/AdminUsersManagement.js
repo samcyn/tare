@@ -5,7 +5,7 @@
  * https://samsoniyanda.herokuapp.com
  *
  */
-import React, { Fragment } from 'react';
+import React from 'react';
 
 const AdminUsersManagement = () => (
   <div>Users Management Here on</div>
