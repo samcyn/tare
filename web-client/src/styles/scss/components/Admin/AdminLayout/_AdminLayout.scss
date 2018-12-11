@@ -1,7 +1,7 @@
 @import '../../../base/variables';
 
 .dashboard__aside {
-  background: $grey-dark;
+  background: #222D32; //#1e282c
   height: 100%;
   width: $asidePanelWidth;
   position: fixed;
@@ -37,5 +37,32 @@
 
   .dashboard__main {
     width: 100%;
+  }
+}
+.dashboard-aside__header {
+  height: 52px;
+}
+
+.dashboard-aside__divider {
+  background-color: #1a2226;
+  height: 40px;
+  // margin-bottom: $spacing;
+  width: 100%;
+}
+
+.dashboard-aside__links {
+  color: #b8c7ce;
+  display: flex;
+  padding: $spacing $spacing + 3;
+  span {
+    align-self: center;
+    margin-left: $spacing;
+  }
+  [class*='icon-'] {
+    align-self: center;
+  }
+  &:hover, &.dashboard-aside--active{
+    color: $white;
+    background-color: #1e282c;
   }
 }

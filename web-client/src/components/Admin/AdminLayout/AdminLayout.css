@@ -6,7 +6,7 @@
  *
  */
 .dashboard__aside {
-  background: #404142;
+  background: #222D32;
   height: 100%;
   width: 250px;
   position: fixed;
@@ -34,3 +34,24 @@
     right: 0; }
   .dashboard__main {
     width: 100%; } }
+
+.dashboard-aside__header {
+  height: 52px; }
+
+.dashboard-aside__divider {
+  background-color: #1a2226;
+  height: 40px;
+  width: 100%; }
+
+.dashboard-aside__links {
+  color: #b8c7ce;
+  display: flex;
+  padding: 12px 15px; }
+  .dashboard-aside__links span {
+    align-self: center;
+    margin-left: 12px; }
+  .dashboard-aside__links [class*='icon-'] {
+    align-self: center; }
+  .dashboard-aside__links:hover, .dashboard-aside__links.dashboard-aside--active {
+    color: #FFFFFF;
+    background-color: #1e282c; }

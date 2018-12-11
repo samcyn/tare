@@ -6,12 +6,15 @@
  *
  */
 import React, { Component } from 'react';
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, NavLink } from "react-router-dom";
+import SimpleLineIcon from 'react-simple-line-icons';
+
 
 import AdminDashboard from '../AdminDashboard/AdminDashboard';
 import AdminEventsManagement from '../AdminEventsManagement/AdminEventsManagement';
 import AdminUsersManagement from '../AdminUsersManagement/AdminUsersManagement';
 import AdminCategoriesManagement from '../AdminCategoriesManagement/AdminCategoriesManagement';
+import Logo from '../../Global/Logo/Logo';
 
 import './AdminLayout.css';
 
@@ -46,7 +49,7 @@ const AdminHeader = ({ sideBarController }) => (
           </a>
 
         <div className="navbar-item has-dropdown is-hoverable">
-          <a className="navbar-link">
+          <a className="navbar-NavLink">
             More
             </a>
 
@@ -84,6 +87,42 @@ const AdminHeader = ({ sideBarController }) => (
   </nav>
 );
 
+const AdminSideBar = ({ match }) => (
+  <aside className="dashboard__aside">
+    <div className="dashboard-aside__header">
+      <Logo/>
+    </div>
+    <ul className="dashboard-aside__menu">
+      <li className="dashboard-aside__divider is-flex justify-content-center align-items-center">
+        menus
+      </li>
+      <li className="dashboard-aside__list">
+        <NavLink to={match.url} exact={true} className="dashboard-aside__links" activeClassName="dashboard-aside--active">
+          <SimpleLineIcon name="speech" size="small"/> 
+          <span>Dashboard</span>
+        </NavLink>
+      </li>
+      <li className="dashboard-aside__list">
+        <NavLink to={`${match.url}/users`} className="dashboard-aside__links" activeClassName="dashboard-aside--active">
+          <SimpleLineIcon name="user" size="small"/> 
+          <span>Users</span>
+        </NavLink>
+      </li>
+      <li className="dashboard-aside__list">
+        <NavLink to={`${match.url}/events`} className="dashboard-aside__links" activeClassName="dashboard-aside--active">
+          <SimpleLineIcon name="event" size="small"/> 
+          <span>Events</span>
+        </NavLink>
+      </li>
+      <li className="dashboard-aside__list">
+        <NavLink to={`${match.url}/categories`} className="dashboard-aside__links" activeClassName="dashboard-aside--active">
+          <SimpleLineIcon name="list" size="small"/>
+          <span>Categories</span>
+        </NavLink>
+      </li>
+    </ul>
+  </aside>
+);
 
 class AdminLayout extends Component {
   constructor(props) {
@@ -106,32 +145,16 @@ class AdminLayout extends Component {
     return (
       <div className={ !isSideBarOpened ? "dashboard" : "dashboard dashboard--open" }>
         {/* S I D E B A R */}
-        <aside className="dashboard__aside">
-          Sidebar
-          <ul>
-            <li>
-              <Link to={ match.url }>Dashboard</Link>
-            </li>
-            <li>
-              <Link to={ `${match.url}/users` }>Users</Link>
-            </li>
-            <li>
-              <Link to={ `${match.url}/events` }>Events</Link>
-            </li>
-            <li>
-              <Link to={ `${match.url}/categories` }>Categories</Link>
-            </li>
-          </ul>
-        </aside>
+        <AdminSideBar match={ match }/>
         {/*  M A I N C O N T E N T */}
         <section className="dashboard__main">
           <AdminHeader sideBarController={ this.toggleSideBarIsOpened } />
           <div className="dashboard__routes">
             <Switch>
-              <Route exact path={ match.path } render={(props) => <AdminDashboard {...props} />} />
-              <Route exact path={ `${match.path}/users` } render={(props) => <AdminUsersManagement {...props} />} />
-              <Route exact path={ `${match.path}/events` } isExact render={(props) => <AdminEventsManagement {...props} />} />
-              <Route exact path={ `${match.path}/categories` } isExact render={(props) => <AdminCategoriesManagement {...props} />} />
+              <Route exact path={ match.path } render={ (props) => <AdminDashboard { ...props } /> } />
+              <Route exact path={ `${match.path}/users` } render={ (props) => <AdminUsersManagement { ...props } /> } />
+              <Route exact path={ `${match.path}/events` } render={ (props) => <AdminEventsManagement { ...props } /> } />
+              <Route exact path={ `${match.path}/categories` } render={ (props) => <AdminCategoriesManagement { ...props } /> } />
             </Switch>
           </div>
         </section>
