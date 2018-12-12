@@ -58,7 +58,7 @@ class AdminDashboard extends Component {
             <div className="column is-6-mobile">
               <Card>
                 <AdminDashboardStats
-                  color="crimson"
+                  color="orange"
                   title="$425"
                   subtitle="a new way"
                   icon="user" />
@@ -76,7 +76,7 @@ class AdminDashboard extends Component {
             <div className="column is-6-mobile">
               <Card>
                 <AdminDashboardStats
-                  color="green"
+                  color="brown"
                   title="$425"
                   subtitle="a new way"
                   icon="tag" />
@@ -85,7 +85,7 @@ class AdminDashboard extends Component {
             <div className="column is-6-mobile">
               <Card>
                 <AdminDashboardStats
-                  color="brown"
+                  color="green"
                   title="$425"
                   subtitle="a new way"
                   icon="trophy" />

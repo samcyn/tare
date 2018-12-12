@@ -6,7 +6,7 @@
  *
  */
 import React, { Component } from 'react';
-import { Switch, Route, NavLink } from "react-router-dom";
+import { Switch, Route, NavLink, Link } from "react-router-dom";
 import SimpleLineIcon from 'react-simple-line-icons';
 
 
@@ -21,10 +21,9 @@ import './AdminLayout.css';
 const AdminHeader = ({ sideBarController }) => (
   <nav className="navbar" role="navigation" aria-label="main navigation">
     <div className="navbar-brand">
-      <a className="navbar-item" href="https://bulma.io">
-        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" alt="" />
-      </a>
-
+      <Link className="navbar-item is-hidden-desktop" to="/admin">
+        <Logo color="black"/>
+      </Link>
       <a 
         role="button" 
         className="navbar-burger burger" 
@@ -42,33 +41,7 @@ const AdminHeader = ({ sideBarController }) => (
       <div className="navbar-start">
         <a className="navbar-item">
           Home
-          </a>
-
-        <a className="navbar-item">
-          Documentation
-          </a>
-
-        <div className="navbar-item has-dropdown is-hoverable">
-          <a className="navbar-NavLink">
-            More
-            </a>
-
-          <div className="navbar-dropdown">
-            <a className="navbar-item">
-              About
-              </a>
-            <a className="navbar-item">
-              Jobs
-              </a>
-            <a className="navbar-item">
-              Contact
-              </a>
-            <hr className="navbar-divider" />
-            <a className="navbar-item">
-              Report an issue
-              </a>
-          </div>
-        </div>
+        </a>
       </div>
 
       <div className="navbar-end">
@@ -87,14 +60,24 @@ const AdminHeader = ({ sideBarController }) => (
   </nav>
 );
 
+const AdminFooter = () => (
+  <footer className="footer">
+    <div className="content has-text-centered">
+      <p>
+        made with &hearts; by <a href="https://github.com/samcyn" className="has-text-info">@samcyn</a>. Copyright &copy; { new Date().getFullYear() }
+      </p>
+    </div>
+  </footer>
+);
+
 const AdminSideBar = ({ match }) => (
   <aside className="dashboard__aside">
     <div className="dashboard-aside__header">
-      <Logo/>
+      <Logo size={30} color="white"/>
     </div>
     <ul className="dashboard-aside__menu">
       <li className="dashboard-aside__divider is-flex justify-content-center align-items-center">
-        menus
+         welcome username
       </li>
       <li className="dashboard-aside__list">
         <NavLink to={match.url} exact={true} className="dashboard-aside__links" activeClassName="dashboard-aside--active">
@@ -148,6 +131,7 @@ class AdminLayout extends Component {
         <AdminSideBar match={ match }/>
         {/*  M A I N C O N T E N T */}
         <section className="dashboard__main">
+          {/* H E A D E R - R I G H T - H E R E */}
           <AdminHeader sideBarController={ this.toggleSideBarIsOpened } />
           <div className="dashboard__routes">
             <Switch>
@@ -157,6 +141,11 @@ class AdminLayout extends Component {
               <Route exact path={ `${match.path}/categories` } render={ (props) => <AdminCategoriesManagement { ...props } /> } />
             </Switch>
           </div>
+          {/* F O O T E R - R I G H T - H E R E */}
+          <AdminFooter/>
+
+          {/* B O D Y - C L I C K */}
+          { isSideBarOpened && <div className="dashboard__overlay" onClick={ this.toggleSideBarIsOpened }></div> }
         </section>
       </div>
     );

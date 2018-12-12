@@ -1,9 +1,16 @@
+/**
+ * created by Samson Iyanda on 07/12/2018
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
+ 
+@import '../../../base/variables';
+
 .logo, .logo__tag {
   align-items: center;
-  // border-bottom: 1px solid #FFF;
-  color: #FFF;
   display: flex;
-  font-size: 30px;
   font-weight: 900;
   height: 100%;
   justify-content: center;
@@ -13,4 +20,12 @@
 
 .logo__tag {
   letter-spacing: 10px;
+  .logo__entity {
+    transition: all 0.33s linear;
+  }
+  &:hover {
+    .logo__entity {
+      color: $primary;
+    }
+  }
 }
