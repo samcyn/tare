@@ -6,22 +6,24 @@
  *
  */
 import React, { Component } from 'react';
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, NavLink, Link } from "react-router-dom";
+import SimpleLineIcon from 'react-simple-line-icons';
+
 
 import AdminDashboard from '../AdminDashboard/AdminDashboard';
 import AdminEventsManagement from '../AdminEventsManagement/AdminEventsManagement';
 import AdminUsersManagement from '../AdminUsersManagement/AdminUsersManagement';
 import AdminCategoriesManagement from '../AdminCategoriesManagement/AdminCategoriesManagement';
+import Logo from '../../Global/Logo/Logo';
 
 import './AdminLayout.css';
 
 const AdminHeader = ({ sideBarController }) => (
   <nav className="navbar" role="navigation" aria-label="main navigation">
     <div className="navbar-brand">
-      <a className="navbar-item" href="https://bulma.io">
-        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" alt="" />
-      </a>
-
+      <Link className="navbar-item is-hidden-desktop" to="/admin">
+        <Logo color="black"/>
+      </Link>
       <a 
         role="button" 
         className="navbar-burger burger" 
@@ -39,33 +41,7 @@ const AdminHeader = ({ sideBarController }) => (
       <div className="navbar-start">
         <a className="navbar-item">
           Home
-          </a>
-
-        <a className="navbar-item">
-          Documentation
-          </a>
-
-        <div className="navbar-item has-dropdown is-hoverable">
-          <a className="navbar-link">
-            More
-            </a>
-
-          <div className="navbar-dropdown">
-            <a className="navbar-item">
-              About
-              </a>
-            <a className="navbar-item">
-              Jobs
-              </a>
-            <a className="navbar-item">
-              Contact
-              </a>
-            <hr className="navbar-divider" />
-            <a className="navbar-item">
-              Report an issue
-              </a>
-          </div>
-        </div>
+        </a>
       </div>
 
       <div className="navbar-end">
@@ -84,6 +60,52 @@ const AdminHeader = ({ sideBarController }) => (
   </nav>
 );
 
+const AdminFooter = () => (
+  <footer className="footer">
+    <div className="content has-text-centered">
+      <p>
+        made with &hearts; by <a href="https://github.com/samcyn" className="has-text-info">@samcyn</a>. Copyright &copy; { new Date().getFullYear() }
+      </p>
+    </div>
+  </footer>
+);
+
+const AdminSideBar = ({ match }) => (
+  <aside className="dashboard__aside">
+    <div className="dashboard-aside__header">
+      <Logo size={30} color="white"/>
+    </div>
+    <ul className="dashboard-aside__menu">
+      <li className="dashboard-aside__divider is-flex justify-content-center align-items-center">
+         welcome username
+      </li>
+      <li className="dashboard-aside__list">
+        <NavLink to={match.url} exact={true} className="dashboard-aside__links" activeClassName="dashboard-aside--active">
+          <SimpleLineIcon name="speech" size="small"/> 
+          <span>Dashboard</span>
+        </NavLink>
+      </li>
+      <li className="dashboard-aside__list">
+        <NavLink to={`${match.url}/users`} className="dashboard-aside__links" activeClassName="dashboard-aside--active">
+          <SimpleLineIcon name="user" size="small"/> 
+          <span>Users</span>
+        </NavLink>
+      </li>
+      <li className="dashboard-aside__list">
+        <NavLink to={`${match.url}/events`} className="dashboard-aside__links" activeClassName="dashboard-aside--active">
+          <SimpleLineIcon name="event" size="small"/> 
+          <span>Events</span>
+        </NavLink>
+      </li>
+      <li className="dashboard-aside__list">
+        <NavLink to={`${match.url}/categories`} className="dashboard-aside__links" activeClassName="dashboard-aside--active">
+          <SimpleLineIcon name="list" size="small"/>
+          <span>Categories</span>
+        </NavLink>
+      </li>
+    </ul>
+  </aside>
+);
 
 class AdminLayout extends Component {
   constructor(props) {
@@ -106,34 +128,24 @@ class AdminLayout extends Component {
     return (
       <div className={ !isSideBarOpened ? "dashboard" : "dashboard dashboard--open" }>
         {/* S I D E B A R */}
-        <aside className="dashboard__aside">
-          Sidebar
-          <ul>
-            <li>
-              <Link to={ match.url }>Dashboard</Link>
-            </li>
-            <li>
-              <Link to={ `${match.url}/users` }>Users</Link>
-            </li>
-            <li>
-              <Link to={ `${match.url}/events` }>Events</Link>
-            </li>
-            <li>
-              <Link to={ `${match.url}/categories` }>Categories</Link>
-            </li>
-          </ul>
-        </aside>
+        <AdminSideBar match={ match }/>
         {/*  M A I N C O N T E N T */}
         <section className="dashboard__main">
+          {/* H E A D E R - R I G H T - H E R E */}
           <AdminHeader sideBarController={ this.toggleSideBarIsOpened } />
           <div className="dashboard__routes">
             <Switch>
-              <Route exact path={ match.path } render={(props) => <AdminDashboard {...props} />} />
-              <Route exact path={ `${match.path}/users` } render={(props) => <AdminUsersManagement {...props} />} />
-              <Route exact path={ `${match.path}/events` } isExact render={(props) => <AdminEventsManagement {...props} />} />
-              <Route exact path={ `${match.path}/categories` } isExact render={(props) => <AdminCategoriesManagement {...props} />} />
+              <Route exact path={ match.path } render={ (props) => <AdminDashboard { ...props } /> } />
+              <Route exact path={ `${match.path}/users` } render={ (props) => <AdminUsersManagement { ...props } /> } />
+              <Route exact path={ `${match.path}/events` } render={ (props) => <AdminEventsManagement { ...props } /> } />
+              <Route exact path={ `${match.path}/categories` } render={ (props) => <AdminCategoriesManagement { ...props } /> } />
             </Switch>
           </div>
+          {/* F O O T E R - R I G H T - H E R E */}
+          <AdminFooter/>
+
+          {/* B O D Y - C L I C K */}
+          { isSideBarOpened && <div className="dashboard__overlay" onClick={ this.toggleSideBarIsOpened }></div> }
         </section>
       </div>
     );

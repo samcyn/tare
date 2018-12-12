@@ -1,7 +1,16 @@
+/**
+ * created by Samson Iyanda on 07/12/2018
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
+ 
 @import '../../../base/variables';
 
+// D A S H B O A R D - A S I D E
 .dashboard__aside {
-  background: $grey-dark;
+  background: lighten($dark-blue, 2%); 
   height: 100%;
   width: $asidePanelWidth;
   position: fixed;
@@ -10,6 +19,37 @@
   top: 0;
 }
 
+.dashboard-aside__header {
+  height: 52px;
+}
+
+.dashboard-aside__divider {
+  background-color: $dark-deep;
+  font-style: italic;
+  font-weight: 900;
+  height: 40px;
+  width: 100%;
+}
+
+.dashboard-aside__links {
+  color: $cyan-light;
+  display: flex;
+  padding: $spacing $spacing + 3;
+  span {
+    align-self: center;
+    margin-left: $spacing;
+  }
+  [class*='icon-'] {
+    align-self: center;
+  }
+  &:hover, &.dashboard-aside--active{
+    color: $white;
+    background-color: $dark-light;
+  }
+}
+
+
+// D A S H B O A R D - M A I N - C O N T E N T - A R E A
 .dashboard__main {
   background: $grey;
   margin-left: auto;
@@ -38,4 +78,17 @@
   .dashboard__main {
     width: 100%;
   }
+}
+
+
+// D A S H B O A R D - O V E R L A Y
+.dashboard__overlay {
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
 }

@@ -7,53 +7,22 @@
  */
 
 // C O L O U R S
-$plum: #672762;
-$coral: #FA4879;
-$apricot: #FD7972;
-$sunflower: #FEC65A;
-$gradient-universal: linear-gradient(45deg, #7C3A75 0%, #FA4879 33%, #FD7972 68%, #FEC56A 100%);
-
-//S K Y - & - S E A
-$navy: #013366;
-$sky: #19A5CC;
-$aqua: #61DFE5;
-$marine: #9CF8E9;
-$gradient-blue: linear-gradient(24deg, #013366 0%, #19A5CC 42%, #61DFE5 76%, #9CF8E9 100%);
-$gradient-darkBlue: linear-gradient(24deg, #013366 0%, #19A5CC 66%, #61DFE5 100%);
-
-
-//Forest & Flora
-$pine: #00522D;
-$forest: #37A968;
-$spring: #81D97F;
-$lime: #C4FB7C;
-
-//Sun & Sand
 $crimson: #8D1017;
-$sun: #F47E34;
-$sand: #FFC97D;
-$summer: #FFE276;
-
-//Greyscale
-$grey-dark: #404142;
-$grey: #BFBFBF;
-$grey-light: #F5F6FA;
+$cyan-light: #b8c7ce;
+$grey: #F1F1F1;
 $white: #FFFFFF;
-
+$dark-blue: #222D32;
+$dark-deep: #1a2226;
+$dark-light: #1e282c;
 
 
 // F O N T S
-$regularFont: "ProximaNova-Regular", sans-serif;
-$boldFont: "ProximaNova-SemiBold", sans-serif;
-$thinFont: "ProximaNova-Thin", sans-serif;
-
-// D E R I V E D - V A R I A B L E
-$family-primary: $regularFont;
-$primary: $crimson;
-
+$regularFont: "NotoSerifSC-Regular", sans-serif;
+$boldFont: "NotoSerifSC-SemiBold", sans-serif;
+$thinFont: "NotoSerifSC-Light", sans-serif;
 
 // D A S H B O A R D
-$asidePanelWidth: 250px;
+$asidePanelWidth: 300px;
 
 
 // S P A C I N G
@@ -62,3 +31,10 @@ $spacing: 12px;
 // M E D I A - Q U E R I E S
 $mobile-width: 768px;
 $desktop-width: 1024px;
+
+
+// D E R I V E D - V A R I A B L E
+$family-primary: $regularFont;
+$primary: $crimson;
+$footer-padding: 1rem;
+$footer-background-color: $white;

@@ -1,4 +1,11 @@
 /**
+ * created by Samson Iyanda on 07/12/2018
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
+/**
  * created by Samson Iyanda
  * https://github.com/samcyn
  * samsoniyanda@outlook.com
@@ -6,20 +13,43 @@
  *
  */
 .dashboard__aside {
-  background: #404142;
+  background: #263238;
   height: 100%;
-  width: 250px;
+  width: 300px;
   position: fixed;
   bottom: 0;
   left: 0;
   top: 0; }
 
+.dashboard-aside__header {
+  height: 52px; }
+
+.dashboard-aside__divider {
+  background-color: #1a2226;
+  font-style: italic;
+  font-weight: 900;
+  height: 40px;
+  width: 100%; }
+
+.dashboard-aside__links {
+  color: #b8c7ce;
+  display: flex;
+  padding: 12px 15px; }
+  .dashboard-aside__links span {
+    align-self: center;
+    margin-left: 12px; }
+  .dashboard-aside__links [class*='icon-'] {
+    align-self: center; }
+  .dashboard-aside__links:hover, .dashboard-aside__links.dashboard-aside--active {
+    color: #FFFFFF;
+    background-color: #1e282c; }
+
 .dashboard__main {
-  background: #BFBFBF;
+  background: #F1F1F1;
   margin-left: auto;
   min-height: 100vh;
   transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
-  width: calc(100% - 250px);
+  width: calc(100% - 300px);
   position: relative;
   z-index: 5; }
 
@@ -28,9 +58,19 @@
 
 @media (max-width: 1087px) {
   .dashboard--open .dashboard__main {
-    transform: translate(-250px); }
+    transform: translate(-300px); }
   .dashboard__aside {
     left: auto;
     right: 0; }
   .dashboard__main {
     width: 100%; } }
+
+.dashboard__overlay {
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0; }

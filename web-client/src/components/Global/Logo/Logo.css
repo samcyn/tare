@@ -1,0 +1,29 @@
+/**
+ * created by Samson Iyanda on 07/12/2018
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
+/**
+ * created by Samson Iyanda
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
+.logo, .logo__tag {
+  align-items: center;
+  display: flex;
+  font-weight: 900;
+  height: 100%;
+  justify-content: center;
+  padding: 2px;
+  width: 100%; }
+
+.logo__tag {
+  letter-spacing: 10px; }
+  .logo__tag .logo__entity {
+    transition: all 0.33s linear; }
+  .logo__tag:hover .logo__entity {
+    color: #8D1017; }
