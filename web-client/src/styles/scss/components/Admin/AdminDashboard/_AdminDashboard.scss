@@ -19,6 +19,9 @@
 
 .stats__info {
   margin-left: $spacing;
+  h5 {
+    font-family: $bold;
+  }
 }
 
 @include desktop($desktop-width){

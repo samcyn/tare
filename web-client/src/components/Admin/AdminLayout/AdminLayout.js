@@ -6,106 +6,21 @@
  *
  */
 import React, { Component } from 'react';
-import { Switch, Route, NavLink, Link } from "react-router-dom";
-import SimpleLineIcon from 'react-simple-line-icons';
+import { Switch, Route } from "react-router-dom";
 
-
+// V I E W S - O R - S U B R O U T E S
 import AdminDashboard from '../AdminDashboard/AdminDashboard';
 import AdminEventsManagement from '../AdminEventsManagement/AdminEventsManagement';
 import AdminUsersManagement from '../AdminUsersManagement/AdminUsersManagement';
 import AdminCategoriesManagement from '../AdminCategoriesManagement/AdminCategoriesManagement';
-import Logo from '../../Global/Logo/Logo';
+
+// A D M I N L A Y O U T - U T I L I T Y
+import AdminLayoutHeader from './AdminLayoutUtility/AdminLayoutHeader';
+import AdminLayoutSideBar from './AdminLayoutUtility/AdminLayoutSidebar';
+import AdminLayoutFooter from './AdminLayoutUtility/AdminLayoutFooter';
 
 import './AdminLayout.css';
 
-const AdminHeader = ({ sideBarController }) => (
-  <nav className="navbar" role="navigation" aria-label="main navigation">
-    <div className="navbar-brand">
-      <Link className="navbar-item is-hidden-desktop" to="/admin">
-        <Logo color="black"/>
-      </Link>
-      <a 
-        role="button" 
-        className="navbar-burger burger" 
-        aria-label="menu" 
-        aria-expanded="false" 
-        data-target="navbarBasicExample"
-        onClick={ sideBarController }>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-
-    <div id="navbarBasicExample" className="navbar-menu">
-      <div className="navbar-start">
-        <a className="navbar-item">
-          Home
-        </a>
-      </div>
-
-      <div className="navbar-end">
-        <div className="navbar-item">
-          <div className="buttons">
-            <a className="button is-primary">
-              <strong>Sign up</strong>
-            </a>
-            <a className="button is-light">
-              Log in
-                </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-);
-
-const AdminFooter = () => (
-  <footer className="footer">
-    <div className="content has-text-centered">
-      <p>
-        made with &hearts; by <a href="https://github.com/samcyn" className="has-text-info">@samcyn</a>. Copyright &copy; { new Date().getFullYear() }
-      </p>
-    </div>
-  </footer>
-);
-
-const AdminSideBar = ({ match }) => (
-  <aside className="dashboard__aside">
-    <div className="dashboard-aside__header">
-      <Logo size={30} color="white"/>
-    </div>
-    <ul className="dashboard-aside__menu">
-      <li className="dashboard-aside__divider is-flex justify-content-center align-items-center">
-         welcome username
-      </li>
-      <li className="dashboard-aside__list">
-        <NavLink to={match.url} exact={true} className="dashboard-aside__links" activeClassName="dashboard-aside--active">
-          <SimpleLineIcon name="speech" size="small"/> 
-          <span>Dashboard</span>
-        </NavLink>
-      </li>
-      <li className="dashboard-aside__list">
-        <NavLink to={`${match.url}/users`} className="dashboard-aside__links" activeClassName="dashboard-aside--active">
-          <SimpleLineIcon name="user" size="small"/> 
-          <span>Users</span>
-        </NavLink>
-      </li>
-      <li className="dashboard-aside__list">
-        <NavLink to={`${match.url}/events`} className="dashboard-aside__links" activeClassName="dashboard-aside--active">
-          <SimpleLineIcon name="event" size="small"/> 
-          <span>Events</span>
-        </NavLink>
-      </li>
-      <li className="dashboard-aside__list">
-        <NavLink to={`${match.url}/categories`} className="dashboard-aside__links" activeClassName="dashboard-aside--active">
-          <SimpleLineIcon name="list" size="small"/>
-          <span>Categories</span>
-        </NavLink>
-      </li>
-    </ul>
-  </aside>
-);
 
 class AdminLayout extends Component {
   constructor(props) {
@@ -128,21 +43,22 @@ class AdminLayout extends Component {
     return (
       <div className={ !isSideBarOpened ? "dashboard" : "dashboard dashboard--open" }>
         {/* S I D E B A R */}
-        <AdminSideBar match={ match }/>
+        <AdminLayoutSideBar match={ match }/>
         {/*  M A I N C O N T E N T */}
         <section className="dashboard__main">
           {/* H E A D E R - R I G H T - H E R E */}
-          <AdminHeader sideBarController={ this.toggleSideBarIsOpened } />
+          <AdminLayoutHeader sideBarController={ this.toggleSideBarIsOpened } />
           <div className="dashboard__routes">
             <Switch>
               <Route exact path={ match.path } render={ (props) => <AdminDashboard { ...props } /> } />
               <Route exact path={ `${match.path}/users` } render={ (props) => <AdminUsersManagement { ...props } /> } />
               <Route exact path={ `${match.path}/events` } render={ (props) => <AdminEventsManagement { ...props } /> } />
               <Route exact path={ `${match.path}/categories` } render={ (props) => <AdminCategoriesManagement { ...props } /> } />
+              <Route component={ AdminDashboard }></Route>
             </Switch>
           </div>
           {/* F O O T E R - R I G H T - H E R E */}
-          <AdminFooter/>
+          <AdminLayoutFooter/>
 
           {/* B O D Y - C L I C K */}
           { isSideBarOpened && <div className="dashboard__overlay" onClick={ this.toggleSideBarIsOpened }></div> }

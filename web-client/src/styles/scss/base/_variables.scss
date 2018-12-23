@@ -17,13 +17,14 @@ $dark-light: #1e282c;
 
 
 // F O N T S
-$regularFont: "NotoSerifSC-Regular", sans-serif;
-$boldFont: "NotoSerifSC-SemiBold", sans-serif;
-$thinFont: "NotoSerifSC-Light", sans-serif;
+$regular: "NotoSerifSC-Regular", sans-serif;
+$semiBold: "NotoSerifSC-SemiBold", sans-serif;
+$thin: "NotoSerifSC-Light", sans-serif;
+$bold: "NotoSerifSC-Bold", sans-serif;
 
 // D A S H B O A R D
 $asidePanelWidth: 300px;
-
+$footer-height: 48px;
 
 // S P A C I N G
 $spacing: 12px;
@@ -34,7 +35,7 @@ $desktop-width: 1024px;
 
 
 // D E R I V E D - V A R I A B L E
-$family-primary: $regularFont;
+$family-primary: $regular;
 $primary: $crimson;
 $footer-padding: 1rem;
 $footer-background-color: $white;

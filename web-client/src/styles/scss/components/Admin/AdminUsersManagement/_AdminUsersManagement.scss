@@ -1,0 +1,45 @@
+/**
+ * created by Samson Iyanda on 20/12/2018
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
+
+@import '../../../base/variables';
+
+// A D M I N - U S E R S - M E D I A - C O M P O N E N T
+.media {
+  border-bottom: 1px solid $grey;
+}
+
+.media__content {
+  padding: $spacing * 1.5;
+}
+
+.media__index {
+  flex: 0 0 50px;
+  text-align: left;
+  max-width: 50px;
+}
+.media__details {
+  flex: 1;
+}
+.media__image {
+  height: 50px;
+  width: 50px;
+}
+.media__dropdown {
+  flex: 0 0 50px;
+  text-align: right;
+  max-width: 50px;
+}
+
+.media__info {
+  margin-left: $spacing;
+}
+
+.media__subtitle {
+  color: $cyan-light;
+  font-style: italic;
+}
