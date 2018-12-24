@@ -64,7 +64,6 @@ class AdminUsersManagementMedia extends Component {
   }
 }
 
-
 AdminUsersManagementMedia.propTypes = {
   img: PropTypes.string,
   isAdmin: PropTypes.bool,
@@ -74,4 +73,5 @@ AdminUsersManagementMedia.propTypes = {
   modalController: PropTypes.func.isRequired,
   deleteUserController: PropTypes.func.isRequired,
 }
+
 export default AdminUsersManagementMedia;
