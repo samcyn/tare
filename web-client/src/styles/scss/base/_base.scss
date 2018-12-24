@@ -6,21 +6,29 @@
  *
  */
  
-// H E L P E RS
+// H E L P E R S
 .align-self-center {
-  align-self: center;
+  align-self: center !important;
 }
 
 .align-items-center {
-  align-items: center;
+  align-items: center !important;
 }
 
 .justify-content-center {
-  justify-content: center;
+  justify-content: center !important;
 }
 
 .justify-content-space-between {
-  justify-content: space-between;
+  justify-content: space-between !important;
+}
+
+.justify-content-flex-start {
+  justify-content: flex-start !important;
+}
+
+.justify-content-flex-end {
+  justify-content: flex-end !important;
 }
 
 .is-borderless {

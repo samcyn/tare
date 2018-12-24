@@ -1,13 +1,30 @@
+/**
+ * created by Samson Iyanda on 23/12/2018
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
 import React, { Component } from 'react';
+
 import SimpleLineIcon from 'react-simple-line-icons';
+import Dropdown from '../../../Global/Dropdown/Dropdown';
+
 import PropTypes from 'prop-types'; 
 
-import Dropdown from '../../../Global/Dropdown/Dropdown';
 
 
 class AdminUsersManagementMedia extends Component {
   render () {
-    const { img, isAdmin, index, dropDownActiveNumber, dropDownController, modalController } = this.props;
+    const { 
+      img, 
+      isAdmin, 
+      index, 
+      dropDownActiveNumber, 
+      dropDownController, 
+      modalController,
+      deleteUserController, 
+    } = this.props;
     return (
       <div className="media has-background-white">
         <div className="media__content is-flex align-items-center justify-content-space-between">
@@ -32,11 +49,11 @@ class AdminUsersManagementMedia extends Component {
               <a href="#" className="dropdown-item" onClick={ modalController }>
                 Edit User
               </a>
-                <a href="#" className="dropdown-item">
+              <a href="#" className="dropdown-item" onClick= { deleteUserController }>
                   Delete User
               </a>
-                <hr className="dropdown-divider" />
-                <a href="#" className="dropdown-item">
+              <hr className="dropdown-divider" />
+              <a href="#" className="dropdown-item">
                   With a divider
               </a>
             </Dropdown>
@@ -55,5 +72,6 @@ AdminUsersManagementMedia.propTypes = {
   dropDownActiveNumber: PropTypes.number,
   dropDownController: PropTypes.func.isRequired,
   modalController: PropTypes.func.isRequired,
+  deleteUserController: PropTypes.func.isRequired,
 }
 export default AdminUsersManagementMedia;

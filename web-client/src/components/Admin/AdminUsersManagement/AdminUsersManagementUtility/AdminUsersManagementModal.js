@@ -17,21 +17,27 @@ const AdminUsersManagementModal = ({ modalIsActive, modalController, currentUser
       { currentUser === null ?
         <form>
           <div className="field">
-            <label className="label">Name</label>
+            <label className="label">Avatar</label>
+            <div className="control">
+              <input className="input" type="file" />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">User Name</label>
             <div className="control">
               <input className="input" type="text" placeholder="Users name"/>
             </div>
           </div>
           <div className="field">
-            <label className="label">Name</label>
+            <label className="label">Email</label>
             <div className="control">
-              <input className="input" type="text" placeholder="Users name" />
+              <input className="input" type="email" placeholder="User Email" />
             </div>
           </div>
           <div className="field">
-          <label className="label">Name</label>
+          <label className="label">Password</label>
           <div className="control">
-            <input className="input" type="text" placeholder="Users name" />
+            <input className="input" type="password" placeholder="User Password" />
           </div>
         </div>
         </form>
