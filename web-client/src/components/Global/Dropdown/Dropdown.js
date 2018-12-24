@@ -1,3 +1,10 @@
+/**
+ * created by Samson Iyanda on 24/12/2018
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
 import React, { Component } from 'react';
 import SimpleLineIcon from 'react-simple-line-icons';
 import PropTypes from 'prop-types'; 
@@ -5,24 +12,15 @@ import PropTypes from 'prop-types';
 
 class Dropdown extends Component{
   render () {
-    const { dropDownIndex, dropDownActiveNumber, dropDownController } = this.props;
+    const { dropDownIndex, dropDownActiveNumber, dropDownController, children } = this.props;
     return (
       <div className={ dropDownIndex === dropDownActiveNumber ? "dropdown is-active is-right" : "dropdown is-right" }>
         <div className="dropdown-trigger">
-          <SimpleLineIcon name="options-vertical" color="crimson" onClick={() => dropDownController(dropDownIndex) }/>      
+          <SimpleLineIcon name="options-vertical" color="crimson" onClick={ () => dropDownController(dropDownIndex) }/>      
         </div>
         <div className="dropdown-menu" id="dropdown-menu" role="menu">
           <div className="dropdown-content">
-            <a href="#" className="dropdown-item">
-              Edit User
-            </a>
-            <a href="#" className="dropdown-item">
-              Delete User
-            </a>
-            <hr className="dropdown-divider" />
-            <a href="#" className="dropdown-item">
-              With a divider
-            </a>
+            { children }
           </div>
         </div>
       </div>

@@ -6,7 +6,9 @@
  *
  */
 import React, { Component } from 'react';
+
 import AdminUsersManagementMedia from './AdminUsersManagementUtility/AdminUsersManagementMedia';
+import AdminUsersManagementModal from './AdminUsersManagementUtility/AdminUsersManagementModal';
 
 import './AdminUsersManagement.css';
 
@@ -14,7 +16,9 @@ class AdminUsersManagement extends Component {
   constructor (props) {
     super(props);
     this.state = {
+      currentUser: null,
       dropDownActiveNumber: null,
+      modalIsActive: false,
     }
   }
 
@@ -31,12 +35,23 @@ class AdminUsersManagement extends Component {
       });
     } 
   }
+  modalController = (e, currentUser) => {
+    console.log(currentUser);
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        modalIsActive: !prevState.modalIsActive,
+        currentUser: currentUser ? currentUser : null
+      }
+    });
+  }
   render () {
-    const { dropDownActiveNumber } = this.state;
+    const { dropDownActiveNumber, modalIsActive, currentUser } = this.state;
     return (
       <section>
         <div className="is-clearfix">
-          <button className="button is-primary is-pulled-right"> Add User </button>
+          <button className="button is-primary is-pulled-right"
+            onClick={ (e) => this.modalController(e) }> Add User </button>
         </div>
         <br />
         <div className="filters is-clearfix">
@@ -60,23 +75,29 @@ class AdminUsersManagement extends Component {
                 isAdmin={true} 
                 index={1} 
                 dropDownActiveNumber={ dropDownActiveNumber } 
-                dropDownController={this.dropDownController}/>
+                dropDownController={ this.dropDownController }
+                modalController={ (e) => this.modalController(e, { name: 'Dele'}) }/>
             </li>
             <li>
               <AdminUsersManagementMedia 
                 index={2} 
-                dropDownActiveNumber={dropDownActiveNumber}
-                dropDownController={this.dropDownController}/>
+                dropDownActiveNumber={ dropDownActiveNumber }
+                dropDownController={ this.dropDownController }
+                modalController={ (e) => this.modalController(e, { name: 'Usman'}) }/>
             </li>
             <li>
               <AdminUsersManagementMedia 
                 isAdmin index={3} 
-                dropDownActiveNumber={dropDownActiveNumber}
-                dropDownController={this.dropDownController}/>
+                dropDownActiveNumber={ dropDownActiveNumber }
+                dropDownController={ this.dropDownController }
+                modalController={ (e) => this.modalController(e, { name: 'Rabiot'}) }/>
             </li>
           </ul>
         </div>
-
+        <AdminUsersManagementModal 
+          modalIsActive={ modalIsActive } 
+          modalController={ this.modalController }
+          currentUser= { currentUser }/>
       </section>
     );
   }

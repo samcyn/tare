@@ -7,7 +7,7 @@ import Dropdown from '../../../Global/Dropdown/Dropdown';
 
 class AdminUsersManagementMedia extends Component {
   render () {
-    const { img, isAdmin, index, dropDownActiveNumber, dropDownController } = this.props;
+    const { img, isAdmin, index, dropDownActiveNumber, dropDownController, modalController } = this.props;
     return (
       <div className="media has-background-white">
         <div className="media__content is-flex align-items-center justify-content-space-between">
@@ -28,7 +28,18 @@ class AdminUsersManagementMedia extends Component {
             <Dropdown 
               dropDownIndex={ index } 
               dropDownActiveNumber={ dropDownActiveNumber }
-              dropDownController={ dropDownController }/>
+              dropDownController={ dropDownController }>
+              <a href="#" className="dropdown-item" onClick={ modalController }>
+                Edit User
+              </a>
+                <a href="#" className="dropdown-item">
+                  Delete User
+              </a>
+                <hr className="dropdown-divider" />
+                <a href="#" className="dropdown-item">
+                  With a divider
+              </a>
+            </Dropdown>
           </div>
         </div>
       </div>
@@ -43,5 +54,6 @@ AdminUsersManagementMedia.propTypes = {
   index: PropTypes.number.isRequired,
   dropDownActiveNumber: PropTypes.number,
   dropDownController: PropTypes.func.isRequired,
+  modalController: PropTypes.func.isRequired,
 }
 export default AdminUsersManagementMedia;
