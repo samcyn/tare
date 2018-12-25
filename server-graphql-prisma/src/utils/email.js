@@ -1,3 +1,10 @@
+/**
+ * created by Samson Iyanda on 28/11/18
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
 const mailgun = require('mailgun-js')({
   apiKey: process.env.MAIL_GUN_API_KEY,
   domain: process.env.MAIL_GUN_DOMAIN_NAME,
