@@ -27,6 +27,8 @@
 
 .stats__info {
   margin-left: 12px; }
+  .stats__info h5 {
+    font-family: "NotoSerifSC-Bold", sans-serif; }
 
 @media (min-width: 1024px) {
   .is-half-gap > .column:not(:first-child) {

@@ -8,12 +8,20 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ApolloProvider } from "react-apollo";
+import client from './Apolloclient';
 import Routers from './routes';
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
 
-ReactDOM.render(<Routers/>, document.getElementById('root'));
+
+
+ReactDOM.render(
+  <ApolloProvider client={ client }>
+    <Routers />
+  </ApolloProvider>, 
+  document.getElementById('root'));
 
 
 serviceWorker.unregister();

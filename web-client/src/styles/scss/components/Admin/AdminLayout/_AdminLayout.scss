@@ -56,6 +56,7 @@
   min-height: 100vh;
   transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
   width: calc(100% - #{$asidePanelWidth});
+  padding-bottom: $footer-height; // F O O T E R - H E I G H T
   position: relative;
   z-index: 5;
 }
@@ -83,6 +84,7 @@
 
 // D A S H B O A R D - O V E R L A Y
 .dashboard__overlay {
+  background: rgba(255, 255, 255, 0.75);
   height: 100%;
   width: 100%;
   z-index: 100;
@@ -91,4 +93,12 @@
   left: 0;
   right: 0;
   top: 0;
+}
+
+// D A S H B O A R D - F O O T E R
+.dashboard__footer {
+  height: $footer-height;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

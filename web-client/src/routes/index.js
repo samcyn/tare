@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import NotFoundPage from "../components/pages/NotFoundPage";
-import LoginPage from "../components/pages/LoginPage";
-import AdminPage from "../components/pages/AdminPage";
-import PortalPage from "../components/pages/PortalPage";
-import LandingPage from "../components/pages/LandingPage";
-import SignUpPage from "../components/pages/SignupPage";
+import NotFoundPage from "../components/Pages/NotFoundPage";
+import LoginPage from "../components/Pages/LoginPage";
+import AdminPage from "../components/Pages/AdminPage";
+import PortalPage from "../components/Pages/PortalPage";
+import LandingPage from "../components/Pages/LandingPage";
+import SignUpPage from "../components/Pages/SignupPage";
 
 const Routers = () => {
   return (
@@ -16,7 +16,7 @@ const Routers = () => {
           <Route path="/portal" component={ PortalPage } />
           <Route path="/admin" component={ AdminPage } />
           <Route path='/login' component={ LoginPage } />
-          <Route Pagepath='/register' component={ SignUpPage } />
+          <Route path='/register' component={ SignUpPage } />
           <Route component={ NotFoundPage } />
         </Switch>
       </Fragment>
