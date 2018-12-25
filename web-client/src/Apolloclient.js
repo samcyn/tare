@@ -15,7 +15,7 @@ import { getMainDefinition } from "apollo-utilities";
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
-const AUTH_TOKEN = "ar1247ff7foq";
+const AUTH_TOKEN = "auth-token";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000"

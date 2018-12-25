@@ -6,12 +6,41 @@
  *
  */
 import React, { Component } from 'react';
+import { Query } from 'react-apollo';
+import gql from "graphql-tag";
 
 import AdminUsersManagementMedia from './AdminUsersManagementUtility/AdminUsersManagementMedia';
 import AdminUsersManagementModal from './AdminUsersManagementUtility/AdminUsersManagementModal';
 import Pagination from '../../Global/Pagination/Pagination';
+import Loader from '../../Global/Loader/Loader';
+import ErrorUI from '../../Global/Error/ErrorUI';
 
 import './AdminUsersManagement.css';
+
+
+const USER_QUERY = gql`
+  query UserQuery($first: Int, $skip: Int, $orderBy: LinkOrderByInput) {
+    users(first: $first, skip: $skip, orderBy: $orderBy) {
+      links {
+        id
+        createdAt
+        url
+        description
+        postedBy {
+          id
+          name
+        }
+        votes {
+          id
+          user {
+            id
+          }
+        }
+      }
+      count
+    }
+  }
+`;
 
 class AdminUsersManagement extends Component {
   constructor (props) {
@@ -74,39 +103,45 @@ class AdminUsersManagement extends Component {
         </div>
         <br />
         {/* table */}
-        <div className="table">
-          <ul>
-            <li>
-              <AdminUsersManagementMedia 
-                isAdmin={true} 
-                index={1} 
-                dropDownActiveNumber={ dropDownActiveNumber } 
-                dropDownController={ this.dropDownController }
-                modalController={ (e) => this.modalController(e, { name: 'Dele'}) }
-                deleteUserController={ () => this.deleteUserController('User ID 1') }/>
-            </li>
-            <li>
-              <AdminUsersManagementMedia 
-                index={2} 
-                dropDownActiveNumber={ dropDownActiveNumber }
-                dropDownController={ this.dropDownController }
-                modalController={ (e) => this.modalController(e, { name: 'Usman'}) }
-                deleteUserController={ () => this.deleteUserController('User ID 2') }/>
-            </li>
-            <li>
-              <AdminUsersManagementMedia 
-                isAdmin index={3} 
-                dropDownActiveNumber={ dropDownActiveNumber }
-                dropDownController={ this.dropDownController }
-                modalController={ (e) => this.modalController(e, { name: 'Rabiot'}) }
-                deleteUserController={ () => this.deleteUserController('User ID 3') }/>
-            </li>
-          </ul>
-          <br/>
-          {/* P A G I N A T I O N */}
-          <Pagination/>
-        </div>
-        
+        <Query query={ USER_QUERY } variables={ {skip: 4, first: 10, orderBy: 'createdAt_DESC'}}>
+          {
+            ({ data, loading, error }) => {
+              if(loading) {
+                return (<Loader size={64}/>);
+              }
+              if(error) {
+                return (
+                  <ErrorUI 
+                    icon
+                    iconName="shield"
+                    iconFontSize={140}
+                    height={250}
+                    opacity={0.25}
+                    error={ error }
+                  />
+                );
+              }
+              return (
+                <div className="table">
+                  <ul>
+                    <li>
+                      <AdminUsersManagementMedia 
+                        isAdmin={true} 
+                        index={1} 
+                        dropDownActiveNumber={ dropDownActiveNumber } 
+                        dropDownController={ this.dropDownController }
+                        modalController={ (e) => this.modalController(e, { name: 'Dele'}) }
+                        deleteUserController={ () => this.deleteUserController('User ID 1') }/>
+                    </li>
+                  </ul>
+                  <br/>
+                  {/* P A G I N A T I O N */}
+                  <Pagination/>
+                </div>
+              );
+            }
+          }
+        </Query>
         {/* M O D A L */}
         <AdminUsersManagementModal 
           modalIsActive={ modalIsActive } 
