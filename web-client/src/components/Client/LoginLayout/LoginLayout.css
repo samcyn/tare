@@ -1,0 +1,21 @@
+/**
+ * created by Samson Iyanda on 27/12/2018
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
+/**
+ * created by Samson Iyanda
+ * https://github.com/samcyn
+ * samsoniyanda@outlook.com
+ * https://samsoniyanda.herokuapp.com
+ *
+ */
+.register {
+  background-color: #F1F1F1;
+  height: 100vh;
+  padding: 0 12px; }
+  .register .card {
+    max-width: 400px;
+    width: 100%; }

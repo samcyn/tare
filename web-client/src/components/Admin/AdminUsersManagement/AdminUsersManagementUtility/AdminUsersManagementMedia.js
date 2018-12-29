@@ -17,7 +17,8 @@ import PropTypes from 'prop-types';
 class AdminUsersManagementMedia extends Component {
   render () {
     const { 
-      img, 
+      img,
+      title, 
       isAdmin, 
       index, 
       dropDownActiveNumber, 
@@ -37,7 +38,7 @@ class AdminUsersManagementMedia extends Component {
               <img src={img || "https://cdn.iconscout.com/icon/free/png-256/avatar-369-456321.png"} alt="avatar" />
             </div>
             <div className="media__info">
-              <h6 className="media__title">Title</h6>
+              <h6 className="media__title">{ title }</h6>
               <p className="media__subtitle">{ isAdmin ? "admin" : "user" }</p>
             </div>
           </div>
@@ -67,6 +68,7 @@ class AdminUsersManagementMedia extends Component {
 AdminUsersManagementMedia.propTypes = {
   img: PropTypes.string,
   isAdmin: PropTypes.bool,
+  title: PropTypes.string,
   index: PropTypes.number.isRequired,
   dropDownActiveNumber: PropTypes.number,
   dropDownController: PropTypes.func.isRequired,

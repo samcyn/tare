@@ -9,8 +9,8 @@
 import React from 'react';
 
 
-const Portal = () => (
+const PortalPage = () => (
   <div>Portal</div>
 );
 
-export default Portal;
+export default PortalPage;

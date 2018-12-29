@@ -7,10 +7,11 @@
  */
 
 import React from 'react';
+import LoginLayout from '../Client/LoginLayout/LoginLayout';
 
 
-const Login = () => (
-  <div>Login</div>
+const LoginPage = (props) => (
+  <LoginLayout {...props }/>
 );
 
-export default Login;
+export default LoginPage;

@@ -1,0 +1,11 @@
+@import "../../../base/variables";
+
+.register {
+  background-color: $grey;
+  height: 100vh;
+  padding: 0 $spacing;
+  .card {
+    max-width: 400px;
+    width: 100%;
+  }
+}

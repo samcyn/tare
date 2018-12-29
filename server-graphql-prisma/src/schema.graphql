@@ -1,4 +1,4 @@
-# import Event, Category, UserOrderByInput, EventOrderByInput, CategoryOrderByInput, Like, Dislike, EventSubscriptionPayload, LikeSubscriptionPayload, DislikeSubscriptionPayload, UserSubscriptionPayload from "./generated/prisma.graphql"
+# import User, Event, Category, UserOrderByInput, EventOrderByInput, CategoryOrderByInput, Like, Dislike, EventSubscriptionPayload, LikeSubscriptionPayload, DislikeSubscriptionPayload, UserSubscriptionPayload from "./generated/prisma.graphql"
 scalar Upload
 
 type AuthPayload {
@@ -6,11 +6,13 @@ type AuthPayload {
   user: User
 }
 
-type User {
-  name: String!
-  email: String!
-  events: [Event!]!
-}
+# type User {
+#   id: ID
+#   isAdmin: 
+#   name: String!
+#   email: String!
+#   events: [Event!]!
+# }
 
 type Query {
   info: String!
