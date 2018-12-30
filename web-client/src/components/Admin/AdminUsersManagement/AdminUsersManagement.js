@@ -19,25 +19,15 @@ import './AdminUsersManagement.css';
 
 
 const USER_QUERY = gql`
-  query UserQuery($first: Int, $skip: Int, $orderBy: LinkOrderByInput) {
-    users(first: $first, skip: $skip, orderBy: $orderBy) {
-      links {
-        id
-        createdAt
-        url
-        description
-        postedBy {
-          id
-          name
-        }
-        votes {
-          id
-          user {
-            id
-          }
-        }
-      }
+  query UserQuery($skip: Int, $first: Int, $orderBy: UserOrderByInput) {
+    getUsers(skip: $skip, first: $first, orderBy: $orderBy){
       count
+      users{
+        id
+        isAdmin
+        name
+        email
+      }
     }
   }
 `;
@@ -103,36 +93,47 @@ class AdminUsersManagement extends Component {
         </div>
         <br />
         {/* table */}
-        <Query query={ USER_QUERY } variables={ {skip: 4, first: 10, orderBy: 'createdAt_DESC'}}>
+        <Query query={ USER_QUERY } variables={{ skip: 0, first: 10, orderBy: 'createdAt_DESC' }}>
           {
             ({ data, loading, error }) => {
               if(loading) {
-                return (<Loader size={64}/>);
+                return (
+                  <Loader 
+                    size={64} 
+                    height={250}
+                  />
+                );
               }
               if(error) {
                 return (
                   <ErrorUI 
                     icon
-                    iconName="shield"
+                    iconName="ban"
                     iconFontSize={140}
-                    height={250}
+                    height={350}
                     opacity={0.25}
                     error={ error }
                   />
                 );
               }
+              const { users } = data.getUsers;
               return (
                 <div className="table">
                   <ul>
-                    <li>
-                      <AdminUsersManagementMedia 
-                        isAdmin={true} 
-                        index={1} 
-                        dropDownActiveNumber={ dropDownActiveNumber } 
-                        dropDownController={ this.dropDownController }
-                        modalController={ (e) => this.modalController(e, { name: 'Dele'}) }
-                        deleteUserController={ () => this.deleteUserController('User ID 1') }/>
-                    </li>
+                    {
+                      users.map((user, index) => (
+                        <li key={user.id}>
+                          <AdminUsersManagementMedia
+                            isAdmin={ user.isAdmin }
+                            title={ user.name }
+                            index={ index }
+                            dropDownActiveNumber={ dropDownActiveNumber }
+                            dropDownController={ this.dropDownController }
+                            modalController={ (e) => this.modalController(e, user) }
+                            deleteUserController={ () => this.deleteUserController(user.id) } />
+                        </li>
+                      ))
+                    }
                   </ul>
                   <br/>
                   {/* P A G I N A T I O N */}

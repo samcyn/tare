@@ -11,6 +11,7 @@ const ErrorUI = ({background, color, height, opacity, icon, iconName, iconFontSi
         {icon && <SimpleLineIcon name={iconName} color={ color } style={{ fontSize: iconFontSize + 'px' }}/>}
         <br/>
         { error.networkError && <div><p style={{color}}>Network Error</p></div> }
+        {!error.networkError && error.message && <div><p style={{ color }}>Check you internet connection</p></div>}
       </div>
     </div>
   );

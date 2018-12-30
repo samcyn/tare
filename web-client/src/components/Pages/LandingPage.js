@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import LandingPageLayout from '../Public/LandingPage/LandingPageLayout';
+import LandingPageLayout from '../Client/LandingPageLayout/LandingPageLayout';
 
 
 const LandingPage = () => (
