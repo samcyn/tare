@@ -52,6 +52,7 @@ export default class AuthService {
 
   setToken(res) {
     try {
+      
       //Store the decrypted surrogate key in your session variable.
       let expiry = JSON.stringify((this.maxMins * 60 * 1000) + new Date().getTime()),
         encrypted = crypto.AES.encrypt(expiry, key);
@@ -60,7 +61,7 @@ export default class AuthService {
 
       localStorage.setItem(AUTH_TIME, encrypted);
       localStorage.setItem(AUTH_TOKEN, token);
-      localStorage.setItem(AUTH_USER, user);
+      localStorage.setItem(AUTH_USER, JSON.stringify(user));
     }
     catch (ex) {
       return ex;
@@ -80,12 +81,9 @@ export default class AuthService {
 
   getProfile() {
     let token = localStorage.getItem(AUTH_TOKEN),
-      user = localStorage.getItem(AUTH_USER);
+      user =  JSON.parse(localStorage.getItem(AUTH_USER));
     if(user && token) {
-      return {
-        token,
-        user
-      };
+      return user;
     }
     else {
       return false;

@@ -7,6 +7,8 @@
  */
 
 import React, { Component } from 'react';
+import { Redirect } from "react-router-dom";
+
 import AuthService from './AuthService';
 
 
@@ -27,7 +29,7 @@ const  WithAuth = (AuthComponent) => {
           const profile = await Auth.getProfile();
           if (profile) {
             this.setState({
-              user: profile
+              user: profile,
             });
           }
         }
@@ -38,8 +40,16 @@ const  WithAuth = (AuthComponent) => {
     }
     
     render() {
+      const location = this.props.location;
+      // I F - U S E R - I S - N O T - L O G G E D - I N - R E D I R E C T - T O - S I G N U P - P A G E
+      if (!Auth.loggedIn()) {
+        return <Redirect to={{
+          pathname: "/login",
+          state: { from: location }
+        }}/>
+      }
       return (
-        <AuthComponent user={ this.state.user } {...this.props}/>
+        <AuthComponent currentUser={ this.state.user } {...this.props}/>
       )
     }
   }
