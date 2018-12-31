@@ -6,14 +6,14 @@ import PropTypes from 'prop-types';
 
 import Logo from '../../../Global/Logo/Logo';
 
-const AdminLayoutSideBar = ({ match }) => (
+const AdminLayoutSideBar = ({ match, currentUser }) => (
   <aside className="dashboard__aside">
     <div className="dashboard-aside__header">
       <Logo size={30} color="white" />
     </div>
     <ul className="dashboard-aside__menu">
       <li className="dashboard-aside__divider is-flex justify-content-center align-items-center">
-        welcome username
+        welcome @{ currentUser ? currentUser.name : 'Stranger'}
       </li>
       <li className="dashboard-aside__list">
         <NavLink to={match.url} exact={true} className="dashboard-aside__links" activeClassName="dashboard-aside--active">
@@ -44,7 +44,8 @@ const AdminLayoutSideBar = ({ match }) => (
 );
 
 AdminLayoutSideBar.propTypes = {
-  match: PropTypes.object
+  match: PropTypes.object,
+  currentUser: PropTypes.object,
 }
 
 

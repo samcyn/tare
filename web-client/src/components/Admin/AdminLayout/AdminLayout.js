@@ -38,16 +38,16 @@ class AdminLayout extends Component {
   }
 
   render () {
-    const { match, user } = this.props;
+    const { match, currentUser } = this.props;
     const { isSideBarOpened } = this.state;
     return (
       <div className={ !isSideBarOpened ? "dashboard" : "dashboard dashboard--open" }>
         {/* S I D E B A R */}
-        <AdminLayoutSideBar match={ match }/>
+        <AdminLayoutSideBar match={ match } currentUser={ currentUser }/>
         {/*  M A I N C O N T E N T */}
         <section className="dashboard__main">
           {/* H E A D E R - R I G H T - H E R E */}
-          <AdminLayoutHeader sideBarController={ this.toggleSideBarIsOpened } user = { user } />
+          <AdminLayoutHeader sideBarController={ this.toggleSideBarIsOpened } currentUser = { currentUser } />
           <div className="dashboard__routes">
             <Switch>
               <Route exact path={ match.path } render={ (props) => <AdminDashboard { ...props } /> } />

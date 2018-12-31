@@ -67,9 +67,15 @@
 
 @media (max-width: 1087px) {
 
-  .dashboard--open .dashboard__main {
-    transform: translate(-$asidePanelWidth);
-  }
+  .dashboard--open {
+    .dashboard__main {
+      transform: translate(-$asidePanelWidth);
+    }
+    .dashboard__overlay {
+      display: block;
+    }
+  } 
+    
 
   .dashboard__aside{
     left: auto;
@@ -85,6 +91,7 @@
 // D A S H B O A R D - O V E R L A Y
 .dashboard__overlay {
   background: rgba(255, 255, 255, 0.75);
+  display: none; // S H O W - U P - O N L Y - I N - S M A L L E R - S C R E E N
   height: 100%;
   width: 100%;
   z-index: 100;

@@ -7,6 +7,7 @@
  */
 
 import React, { Component } from 'react';
+import { Redirect } from "react-router-dom";
 import { Formik, Form } from 'formik';
 import * as yup from 'yup'; 
 import { Mutation } from "react-apollo";
@@ -22,8 +23,15 @@ import Button from '../../Global/Button/Button';
 import './LoginLayout.css';
 
 
-const validationSchema = yup.object().shape({
+const validationSchemaRegister = yup.object().shape({
   name: yup.string().min(3, 'Name must be 3 characters or longer').required('Name is required'),
+  email: yup.string().email('Email not valid').required('Email is required'),
+  password: yup.string().min(5, 'Password must be 5 characters or longer').required('Password is required')
+});
+
+
+
+const validationSchemaLogin = yup.object().shape({
   email: yup.string().email('Email not valid').required('Email is required'),
   password: yup.string().min(5, 'Password must be 5 characters or longer').required('Password is required')
 });
@@ -56,9 +64,11 @@ const SIGNUP_MUTATION = gql`
   }
 `;
 
+const Auth = new AuthService();
 
 class LoginLayout extends Component {
-  
+  state = { redirectToReferrer: false };
+
   handleSubmit = async (values, { resetForm, setErrors, setSubmitting }, mutation) => {
     // setTimeout(() => {
     //   if (values.email === 'andrew@test.io') {
@@ -68,12 +78,12 @@ class LoginLayout extends Component {
     //   }
     //   setSubmitting(false);
     // }, 2000);
-    const Auth = new AuthService();
     try {
       const result = await mutation({ variables: { ...values } });
       Auth.setToken(result);
       resetForm();
       setSubmitting(false);
+      this.setState({ redirectToReferrer: true });
     }
     catch (error) {
       console.log("ERRORS", { error });
@@ -82,10 +92,23 @@ class LoginLayout extends Component {
   }
 
   render () {
-    const { match } = this.props;
+    const { match, location, history } = this.props;
+    let { redirectToReferrer } = this.state;
+
     // C H E C K - C U R RE N T - P A T H - A N D - D E C I D E - W H A T - T O - R E N D E R
     const registration = match.path === '/register';
-  
+
+    let { from } = location.state || { from: { pathname: "/admin" } };
+
+
+    // I F - U S E R - L O G G E D - I N - R E D I R E C T - T O - P R E V I O U S- P A G E
+    if (Auth.loggedIn()) {
+      history.goBack();
+      return null;
+    }
+    
+    if (redirectToReferrer) return <Redirect to={from} />;
+
     return (
       <section className="register is-flex justify-content-center align-items-center">
         <Card header headerTitle={ registration ? "Register" : "Login" }>
@@ -93,9 +116,9 @@ class LoginLayout extends Component {
             {
               (mutation) => (
                 <Formik
-                  initialValues={{ email: '', password: '' }}
+                  initialValues={{ email: '', password: '', name: '' }}
                   onSubmit={(values, formikBag) => this.handleSubmit(values, formikBag, mutation)}
-                  validationSchema={validationSchema}
+                  validationSchema={ registration ? validationSchemaRegister : validationSchemaLogin }
                 >
                   {
                     ({ isSubmitting }) => (

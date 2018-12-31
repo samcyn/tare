@@ -60,6 +60,8 @@
 @media (max-width: 1087px) {
   .dashboard--open .dashboard__main {
     transform: translate(-300px); }
+  .dashboard--open .dashboard__overlay {
+    display: block; }
   .dashboard__aside {
     left: auto;
     right: 0; }
@@ -68,6 +70,7 @@
 
 .dashboard__overlay {
   background: rgba(255, 255, 255, 0.75);
+  display: none;
   height: 100%;
   width: 100%;
   z-index: 100;
